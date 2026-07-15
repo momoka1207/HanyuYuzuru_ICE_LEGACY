@@ -1,0 +1,440 @@
+/* Final upload-only corrections. The original paged-light files remain untouched. */
+.hero-bg {
+  background:
+    linear-gradient(90deg, #01070e 0%, rgba(1, 7, 14, .97) 19%, rgba(1, 7, 14, .82) 36%, rgba(1, 7, 14, .35) 58%, rgba(1, 7, 14, .06) 78%, rgba(1, 7, 14, .02) 100%),
+    url("assets/inline-00-b3683d2dba.jpg") calc(94vw - 935px) 52% / auto 115% no-repeat !important;
+  background-color: #01070e !important;
+  filter: saturate(.94) contrast(1.02) !important;
+}
+
+.producer-credit {
+  text-transform: none !important;
+  visibility: hidden !important;
+}
+
+html[data-producer-ready="true"] .producer-credit {
+  visibility: visible !important;
+}
+
+html[data-paged-language="zh"] body.page-home .hero h1 {
+  font-family: "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC", "SimSun", serif !important;
+  font-weight: 650 !important;
+  letter-spacing: 0 !important;
+}
+
+html[data-paged-language="en"] body.page-home .hero h1 {
+  font-family: "Baskerville", "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif !important;
+  font-weight: 560 !important;
+  letter-spacing: 0 !important;
+}
+
+html[data-paged-language="ja"] body.page-home .hero h1 {
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", "MS PMincho", serif !important;
+  font-weight: 620 !important;
+  letter-spacing: 0 !important;
+}
+
+@media (min-width: 761px) and (max-width: 980px) {
+  .hero-bg {
+    background:
+      linear-gradient(90deg, #01070e 0%, rgba(1, 7, 14, .94) 28%, rgba(1, 7, 14, .48) 56%, rgba(1, 7, 14, .04) 100%),
+      url("assets/inline-00-b3683d2dba.jpg") left center / auto 110% no-repeat !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .hero-bg {
+    background:
+      linear-gradient(180deg, rgba(1, 7, 14, .06) 0%, rgba(1, 7, 14, .12) 43%, rgba(1, 7, 14, .74) 72%, #01070e 100%),
+      linear-gradient(90deg, rgba(1, 7, 14, .28), rgba(1, 7, 14, .02) 74%, rgba(1, 7, 14, .08)),
+      url("assets/inline-00-b3683d2dba.jpg") 46% 20% / auto 110% no-repeat !important;
+    background-color: #01070e !important;
+  }
+
+  /* Compact mobile rhythm: preserve every item, but remove desktop-sized voids. */
+  .section {
+    padding: 36px 0 !important;
+  }
+
+  .section-head {
+    margin-bottom: 18px !important;
+  }
+
+  .section-head h2 {
+    margin-top: 6px !important;
+  }
+
+  .section-intro {
+    margin-top: 10px !important;
+    line-height: 1.65 !important;
+  }
+
+  .glass,
+  .panel,
+  .archive-shell,
+  .show-map-side,
+  .ice-japan-copy {
+    padding: 14px !important;
+  }
+
+  /* Milestones read as compact editorial rows instead of tall poster cards. */
+  .milestone-grid {
+    gap: 10px !important;
+  }
+
+  .milestone-card,
+  .overview-milestone .milestone-card {
+    min-height: 0 !important;
+    display: grid !important;
+    grid-template-columns: 116px minmax(0, 1fr) !important;
+    align-items: stretch !important;
+    border-radius: 12px !important;
+  }
+
+  .milestone-card img,
+  .overview-milestone .milestone-card img {
+    width: 116px !important;
+    height: 100% !important;
+    min-height: 138px !important;
+    max-height: 168px !important;
+    object-fit: cover !important;
+    object-position: center 18% !important;
+  }
+
+  .milestone-body {
+    padding: 12px !important;
+  }
+
+  .milestone-card h3 {
+    margin: 5px 0 !important;
+    font-size: 15px !important;
+    line-height: 1.25 !important;
+  }
+
+  .milestone-card p {
+    font-size: 10px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Biography and countdown panels. */
+  .portrait-panel {
+    min-height: 360px !important;
+  }
+
+  .portrait-caption {
+    left: 18px !important;
+    right: 18px !important;
+    bottom: 18px !important;
+  }
+
+  .profile-copy {
+    padding: 16px !important;
+  }
+
+  .profile-copy .lead {
+    margin: 10px 0 16px !important;
+    font-size: 15px !important;
+    line-height: 1.72 !important;
+  }
+
+  .life-line {
+    margin: 16px 0 !important;
+    gap: 8px 12px !important;
+  }
+
+  .countdown {
+    margin-top: 10px !important;
+    padding: 14px !important;
+  }
+
+  .countdown-clock {
+    gap: 6px !important;
+    margin-top: 10px !important;
+  }
+
+  .count-unit {
+    padding: 9px 6px !important;
+  }
+
+  .count-unit b {
+    font-size: 23px !important;
+  }
+
+  /* Competition filters and records stay scannable without one giant row per field. */
+  .archive-shell {
+    border-radius: 16px !important;
+  }
+
+  .archive-controls {
+    gap: 7px !important;
+  }
+
+  .archive-controls input,
+  .archive-controls select {
+    min-height: 42px !important;
+    padding: 9px 10px !important;
+  }
+
+  .archive-summary {
+    padding: 12px 2px 9px !important;
+  }
+
+  .competition-list {
+    gap: 6px !important;
+  }
+
+  .competition-row {
+    grid-template-columns: 42px minmax(0, 1fr) 62px !important;
+    gap: 8px !important;
+    padding: 10px !important;
+    min-height: 0 !important;
+    border-radius: 10px !important;
+  }
+
+  .comp-year {
+    font-size: 12px !important;
+  }
+
+  .comp-name b {
+    font-size: 11px !important;
+    line-height: 1.25 !important;
+  }
+
+  .comp-name span {
+    font-size: 9px !important;
+    line-height: 1.35 !important;
+  }
+
+  .comp-result {
+    justify-self: end !important;
+    text-align: right !important;
+  }
+
+  .comp-type,
+  .competition-row > .comp-location {
+    display: none !important;
+  }
+
+  /* Show archive: smaller covers and a shorter city/event viewport. */
+  .poster,
+  .poster:nth-child(1),
+  .poster:nth-child(4),
+  .poster-grid.show-timeline .poster {
+    min-height: 300px !important;
+    border-radius: 14px !important;
+  }
+
+  .poster-content {
+    left: 16px !important;
+    right: 16px !important;
+    bottom: 14px !important;
+  }
+
+  .poster h3 {
+    margin: 7px 0 5px !important;
+    font-size: 21px !important;
+  }
+
+  .ice-universe-grid {
+    gap: 10px !important;
+  }
+
+  .ice-story-card,
+  .ice-story-card.feature {
+    min-height: 0 !important;
+    display: grid !important;
+    grid-template-columns: 124px minmax(0, 1fr) !important;
+    border-radius: 14px !important;
+  }
+
+  .ice-story-card img,
+  .ice-story-card.feature img {
+    width: 124px !important;
+    height: 100% !important;
+    min-height: 138px !important;
+    padding: 10px !important;
+  }
+
+  .ice-story-card .story-body {
+    padding: 12px !important;
+  }
+
+  .ice-story-card h4 {
+    margin: 6px 0 4px !important;
+    font-size: 18px !important;
+  }
+
+  .ice-story-card p {
+    font-size: 10px !important;
+    line-height: 1.5 !important;
+  }
+
+  .world-map-stage,
+  .japan-map-stage {
+    height: 250px !important;
+  }
+
+  .show-map-events,
+  .ice-japan-events {
+    max-height: 250px !important;
+  }
+
+  /* Costumes: two compact columns, with the face kept inside each crop. */
+  #costumes .stable-costume-controls,
+  .final-costume-controls {
+    gap: 8px !important;
+    margin: 14px 0 !important;
+    padding: 10px !important;
+    border-radius: 14px !important;
+  }
+
+  #costumes .stable-costume-controls select,
+  #costumes .stable-costume-controls button,
+  .final-costume-controls select,
+  .final-costume-controls button {
+    min-height: 42px !important;
+    padding: 0 10px !important;
+    border-radius: 10px !important;
+    font-size: 12px !important;
+  }
+
+  #costumes .stable-costume-layout {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  #costumes .stable-costume-grid,
+  #costumes .costume-grid,
+  #costumes .costume-grid-v2,
+  #costumes .costume-grid-v3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 9px !important;
+  }
+
+  #costumes .stable-costume-card,
+  #costumes .costume-card-v2,
+  #costumes .costume-card-v3 {
+    min-height: 0 !important;
+    border-radius: 12px !important;
+  }
+
+  #costumes .stable-costume-card img,
+  #costumes .costume-card-v2 img,
+  #costumes .costume-card-v3 .costume-image-shell,
+  #costumes .costume-card-v3 .costume-image-shell img {
+    height: 176px !important;
+    min-height: 0 !important;
+    object-fit: cover !important;
+    object-position: center 16% !important;
+  }
+
+  #costumes .stable-costume-body,
+  #costumes .stable-costume-card .costume-body,
+  #costumes .costume-card-body,
+  #costumes .costume-card-v3 .costume-card-body {
+    padding: 10px !important;
+  }
+
+  #costumes .stable-costume-card h3,
+  #costumes .costume-card-v2 h3,
+  #costumes .costume-card-v3 h3 {
+    margin: 5px 0 !important;
+    font-size: 14px !important;
+    line-height: 1.25 !important;
+  }
+
+  #costumes .stable-costume-card p,
+  #costumes .costume-card-v2 p,
+  #costumes .costume-card-v3 p {
+    font-size: 9px !important;
+    line-height: 1.45 !important;
+  }
+
+  #costumes .stable-costume-card .season {
+    font-size: 8px !important;
+    line-height: 1.35 !important;
+  }
+
+  #costumes .stable-costume-card .costume-years,
+  #costumes .stable-costume-card .costume-source-pill {
+    margin-top: 7px !important;
+    font-size: 9px !important;
+    line-height: 1.35 !important;
+  }
+
+  /* Source rows and all detail dialogs. */
+  .simple-source-group {
+    gap: 8px !important;
+    padding: 11px 0 !important;
+  }
+
+  .simple-source-link {
+    padding: 3px 0 7px !important;
+    font-size: 12px !important;
+  }
+
+  .modal {
+    padding: 8px !important;
+    align-items: center !important;
+    overflow: hidden !important;
+  }
+
+  .modal-card {
+    width: 100% !important;
+    height: auto !important;
+    max-height: calc(100dvh - 16px) !important;
+    overflow: auto !important;
+    border-radius: 14px !important;
+  }
+
+  .modal-hero {
+    height: 210px !important;
+    min-height: 150px !important;
+  }
+
+  .modal-title {
+    left: 16px !important;
+    right: 62px !important;
+    bottom: 14px !important;
+  }
+
+  .modal-title h2,
+  #modalTitle {
+    margin: 5px 0 !important;
+    font-size: clamp(27px, 8.5vw, 38px) !important;
+    line-height: 1.08 !important;
+  }
+
+  .modal-body {
+    padding: 0 16px 20px !important;
+  }
+
+  .modal-copy {
+    gap: 14px !important;
+  }
+
+  .modal-copy p {
+    font-size: 12px !important;
+    line-height: 1.68 !important;
+  }
+
+  .schedule {
+    margin-top: 16px !important;
+  }
+
+  .performance-list,
+  .show-schedule-list {
+    gap: 6px !important;
+  }
+
+  .performance {
+    grid-template-columns: 64px minmax(0, 1fr) !important;
+    gap: 9px !important;
+    padding: 6px !important;
+  }
+
+  .performance img {
+    width: 64px !important;
+    height: 46px !important;
+  }
+}
