@@ -3322,7 +3322,7 @@ drawTrend();renderPosters();renderMilestones();
     });
   }
   function applyLanguage(){
-    const navKeys=['navOverview','navProfile','navCompetitions','navShows','navCostumes','navGuest','navSources'];
+    const navKeys=['navOverview','navProfile','navCompetitions','navShows','navCostumes','navSources'];
     $$('.topbar nav a').forEach((a,i)=>{ if(navKeys[i]) a.textContent=t(navKeys[i]); });
     const chip=$('.source-chip'); if(chip) chip.textContent=t('sourceChip');
     $$('[data-i18n]').forEach(el => {
@@ -3929,13 +3929,13 @@ drawTrend();renderPosters();renderMilestones();
       showTitle:'职业冰演宇宙',showIntro:'点击海报进入详情：查看官网主视觉、官方介绍摘要，以及当前工作簿收录的每一场演出日期与场馆。',
       universe:'ICE STORY 视觉宇宙',universeIntro:'点击海报进入详情，查看官方主视觉、介绍摘要与每一场演出日期。',
       japanTitle:'职业冰演日本地图',japanIntro:'光点标出演出城市，筛选不同系列后对应城市点亮；右侧同步列出日期与场馆。',
-      nav:['生涯总览 / 里程碑','个人主页','比赛档案','职业冰演','考斯滕','群星冰演','官方网站']},
+      nav:['生涯总览 / 里程碑','个人主页','比赛档案','职业冰演','考斯滕','官方网站']},
     en:{countryNode:'COUNTRY NODE',dates:'dates',allShows:'All 36 dates',solo:'Solo narrative',comm:'Commemoration / charity',latest:'2026 latest',
       mapTitle:'World Competition Country Atlas',mapIntro:'The map is grouped by country to avoid city-coordinate errors. Select a country to open its cities or regions, then inspect each competition’s placement, total score and source.',
       showTitle:'Professional Ice Show Universe',showIntro:'Open any poster for details: official key visual, official summary, and every performance date and venue currently recorded.',
       universe:'ICE STORY Visual Universe',universeIntro:'Open a poster for official key visuals, summaries and every performance date.',
       japanTitle:'Professional Ice Shows in Japan',japanIntro:'Light points mark show cities. After filtering by series, matching cities glow and the dates and venues are listed on the right.',
-      nav:['Overview / Milestones','Profile','Competition Archive','Professional Ice Shows','Costumes','Guest Shows','Official Sites']},
+      nav:['Overview / Milestones','Profile','Competition Archive','Professional Ice Shows','Costumes','Official Sites']},
     ja:{countryNode:'国別ノード',dates:'公演',allShows:'全36公演',solo:'個人叙事',comm:'記念／チャリティー',latest:'2026 最新',
       mapTitle:'世界競技 国別アトラス',mapIntro:'地図は国単位で集約し、都市座標の誤差を避けています。国を選ぶと都市・地域が開き、各試合の順位、総得点、出典を確認できます。',
       showTitle:'プロアイスショー宇宙',showIntro:'ポスターを開くと、公式キービジュアル、公式紹介の要約、記録済みの各公演日と会場を確認できます。',
@@ -4678,10 +4678,7 @@ document.addEventListener('click',()=>setTimeout(()=>{translateStatic();},140),t
 
   function removeGuestShows() {
     document.getElementById("guestShows")?.remove();
-    document.querySelectorAll('nav a, .topbar a').forEach(a => {
-      const s = a.textContent + " " + (a.getAttribute("href") || "");
-      if (/guest|群星|ゲスト|foi|fantasy on ice/i.test(s)) a.remove();
-    });
+    
     document.querySelectorAll('a[href*="fantasy-on-ice"], a[href*="fantasy"], #sources a').forEach(a => {
       const linkText = `${a.textContent || ""} ${a.getAttribute("href") || ""}`;
       if (!/foi|fantasy\s*on\s*ice|fantasy/i.test(linkText)) return;
@@ -6719,8 +6716,25 @@ document.addEventListener('click',()=>setTimeout(()=>{translateStatic();},140),t
   document.addEventListener('click',function(){setTimeout(repair,160)},true);
 })();
 </script>
+<style id="mobile-hero-image-final-fix">
+  @media(max-width:760px){
+    .hero-bg{
+      background:
+        linear-gradient(90deg,rgba(1,7,14,.98) 0%,rgba(1,7,14,.93) 34%,rgba(1,7,14,.72) 55%,rgba(1,7,14,.40) 100%),
+        url('assets/inline-00-5a9aeb34ef.jpg') 82% 42%/auto 76% no-repeat!important;
+      background-color:#01070e!important;
+      filter:saturate(.9) contrast(1.02)!important;
+      opacity:1!important;
+    }
+    .hero-bg:before{display:none!important}
+    .hero-bg:after{
+      background:linear-gradient(180deg,#01070e 0%,rgba(1,7,14,.06) 20%,rgba(1,7,14,.18) 70%,#01070e 100%)!important;
+    }
+  }
+</style>
 </body>
 </html>
+
 
 
 
