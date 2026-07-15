@@ -6647,8 +6647,26 @@ document.addEventListener('click',()=>setTimeout(()=>{translateStatic();},140),t
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{updateJuly19(); setInterval(updateJuly19,1000);}); else {updateJuly19(); setInterval(updateJuly19,1000);}  
 })();
 </script>
+<style id="mobile-costume-crop-and-flicker-fix">
+  @media(max-width:760px){
+    html{scroll-behavior:auto!important}
+    #costumes .stable-costume-card img,
+    #costumes .costume-card-v2>img,
+    #costumes .costume-card-v3 .costume-image-shell img{
+      height:300px!important;
+      width:100%!important;
+      object-fit:contain!important;
+      object-position:center top!important;
+      background:#061320!important;
+      padding:0!important;
+    }
+    #costumes .costume-card-v3 .costume-image-shell{height:300px!important;background:#061320!important}
+    #costumes .stable-costume-grid,#costumes .final-costume-grid{grid-template-columns:1fr!important;gap:18px!important}
+  }
+</style>
 </body>
 </html>
+
 
 
 

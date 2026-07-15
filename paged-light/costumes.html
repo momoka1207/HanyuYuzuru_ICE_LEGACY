@@ -6,8 +6,12 @@
   <meta name="description" content="羽生结弦 1994–2026 生涯数据与职业冰演数字展馆">
   <title>羽生结弦 ICE LEGACY｜考斯滕</title>
   <style id="paged-critical-route">
-    html{scroll-behavior:auto!important}body.paged-page .hero,body.paged-page #overview,body.paged-page #profile,body.paged-page #competitions,body.paged-page #shows,body.paged-page #costumes,body.paged-page #sources{display:none!important}body.page-home .hero,body.page-home #overview{display:flex!important}body.page-profile #profile,body.page-competition #competitions,body.page-shows #shows,body.page-costumes #costumes,body.page-sources #sources{display:block!important}
-  </style>
+  html{scroll-behavior:auto!important}
+  body.paged-page.is-page-leaving main,body.paged-page.is-page-leaving section,body.paged-page.is-page-leaving .hero{visibility:hidden!important}
+  body.paged-page .hero,body.paged-page #overview,body.paged-page #profile,body.paged-page #competitions,body.paged-page #shows,body.paged-page #costumes,body.paged-page #sources{display:none!important}
+  body.page-home .hero{display:flex!important}
+  body.page-home #overview,body.page-profile #profile,body.page-competition #competitions,body.page-shows #shows,body.page-costumes #costumes,body.page-sources #sources{display:block!important}
+</style>
   <style>
     :root{--night:#020912;--deep:#071728;--navy:#0b2741;--blue:#287dab;--ice:#bcecff;--white:#f7fcff;--muted:#9db4c6;--gold:#e8c779;--orange:#f1874b;--line:rgba(180,224,246,.17);--glass:rgba(8,28,47,.72)}
     *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--night);color:var(--white);font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif;overflow-x:hidden}
@@ -6632,15 +6636,18 @@ document.addEventListener('click',()=>setTimeout(()=>{translateStatic();},140),t
   function apply(){
     document.body.classList.add("paged-page","page-"+current);
     var nav=document.querySelector(".topbar nav");
-    if(nav && nav.innerHTML!==navHtml) nav.innerHTML=navHtml;
+    if(nav && (nav.querySelectorAll('a[data-paged-link]').length<6 || !nav.querySelector('a[href="sources.html"]'))) nav.innerHTML=navHtml;
     document.querySelectorAll(".topbar nav a").forEach(function(a){
       var key=a.getAttribute("data-paged-link");
       if(key===current) a.setAttribute("data-active-page","1"); else a.removeAttribute("data-active-page");
     });
-    document.querySelectorAll('.hero-actions a[href="#shows"]').forEach(function(a){a.setAttribute("href","shows.html")});
     if(current!=="home" && location.hash) history.replaceState(null,"",location.pathname);
   }
-  apply(); setTimeout(apply,250); setTimeout(apply,1200); setInterval(apply,1800); document.addEventListener("change",apply,true);
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",apply,{once:true}); else apply();
+  document.addEventListener("click",function(e){
+    var a=e.target.closest && e.target.closest('a[data-paged-link]');
+    if(a && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) document.body.classList.add("is-page-leaving");
+  },true);
 })();
 </script>
 <style id="lightweight-final-polish-style">
@@ -6678,8 +6685,47 @@ document.addEventListener('click',()=>setTimeout(()=>{translateStatic();},140),t
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{updateJuly19(); setInterval(updateJuly19,1000);}); else {updateJuly19(); setInterval(updateJuly19,1000);}  
 })();
 </script>
+<style id="mobile-costume-crop-and-flicker-fix">
+  @media(max-width:760px){
+    html{scroll-behavior:auto!important}
+    #costumes .stable-costume-card img,
+    #costumes .costume-card-v2>img,
+    #costumes .costume-card-v3 .costume-image-shell img{
+      height:300px!important;
+      width:100%!important;
+      object-fit:contain!important;
+      object-position:center top!important;
+      background:#061320!important;
+      padding:0!important;
+    }
+    #costumes .costume-card-v3 .costume-image-shell{height:300px!important;background:#061320!important}
+    #costumes .stable-costume-grid,#costumes .final-costume-grid{grid-template-columns:1fr!important;gap:18px!important}
+  }
+</style>
+<script id="paged-final-nav-lock">
+(function(){
+  var navHtml='<a href="index.html" data-paged-link="home">生涯总览／里程碑</a><a href="profile.html" data-paged-link="profile">个人主页</a><a href="competition.html" data-paged-link="competition">比赛档案</a><a href="shows.html" data-paged-link="shows">职业冰演</a><a href="costumes.html" data-paged-link="costumes">考斯滕</a><a href="sources.html" data-paged-link="sources">官方网站</a>';
+  var current=(document.body.className.match(/page-([a-z]+)/)||[])[1]||'home';
+  function repair(){
+    var nav=document.querySelector('.topbar nav');
+    if(!nav) return;
+    nav.innerHTML=navHtml;
+    nav.querySelectorAll('a').forEach(function(a){
+      var key=a.getAttribute('data-paged-link');
+      if(key===current) a.setAttribute('data-active-page','1'); else a.removeAttribute('data-active-page');
+    });
+  }
+  repair(); [0,120,620,1520].forEach(function(ms){setTimeout(repair,ms)});
+  document.addEventListener('click',function(){setTimeout(repair,160)},true);
+})();
+</script>
 </body>
 </html>
+
+
+
+
+
 
 
 
