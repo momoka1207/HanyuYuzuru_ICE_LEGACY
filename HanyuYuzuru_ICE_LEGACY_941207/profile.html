@@ -799,19 +799,19 @@ body::after{
     </div>
     <div class="profile-books-grid" id="profileBooksGrid">
       <article class="glass profile-book-card" data-book-index="0">
-        <div class="profile-book-cover"><img decoding="async" loading="lazy" src="assets/book-aoi-hono-1.jpg" alt="《苍炎》封面"></div>
+        <div class="profile-book-cover"><img decoding="async" loading="lazy" src="./aoi-hono-cover-01.jpg?v=20260717b" onerror="this.onerror=null;this.src='./assets/book-aoi-hono-1.jpg?v=20260717b';" alt="《苍炎》封面"></div>
         <div class="profile-book-copy"><div class="profile-book-meta" id="profileBookMeta0">第 1 卷 · 2012 · 扶桑社</div><h4 id="profileBookTitle0">《苍炎》</h4><p id="profileBookDesc0">以照片和长篇访谈回顾从4岁开始滑冰、经历2011年东日本大地震，到首次站上世界锦标赛领奖台前后的成长。</p></div>
       </article>
       <article class="glass profile-book-card" data-book-index="1">
-        <div class="profile-book-cover"><img decoding="async" loading="lazy" src="assets/book-aoi-hono-2.jpg" alt="《苍炎Ⅱ：飞翔篇》封面"></div>
+        <div class="profile-book-cover"><img decoding="async" loading="lazy" src="./aoi-hono-cover-02.jpg?v=20260717b" onerror="this.onerror=null;this.src='./assets/book-aoi-hono-2.jpg?v=20260717b';" alt="《苍炎Ⅱ：飞翔篇》封面"></div>
         <div class="profile-book-copy"><div class="profile-book-meta" id="profileBookMeta1">第 2 卷 · 2016 · 扶桑社</div><h4 id="profileBookTitle1">《苍炎Ⅱ：飞翔篇》</h4><p id="profileBookDesc1">记录2012年至2016年的竞技历程，包括赴多伦多训练、索契冬奥夺冠、伤病与疾病，以及不断刷新世界纪录的过程。</p></div>
       </article>
       <article class="glass profile-book-card" data-book-index="2">
-        <div class="profile-book-cover"><img decoding="async" loading="lazy" src="assets/book-aoi-hono-3.jpg" alt="《苍炎Ⅲ：究竟篇》封面"></div>
+        <div class="profile-book-cover"><img decoding="async" loading="lazy" src="./aoi-hono-cover-03.jpg?v=20260717b" onerror="this.onerror=null;this.src='./assets/book-aoi-hono-3.jpg?v=20260717b';" alt="《苍炎Ⅲ：究竟篇》封面"></div>
         <div class="profile-book-copy"><div class="profile-book-meta" id="profileBookMeta2">第 3 卷 · 2023 · 扶桑社</div><h4 id="profileBookTitle2">《苍炎Ⅲ：究竟篇》</h4><p id="profileBookDesc2">从2015—2016赛季休赛期写到2018年冬奥卫冕与2020年完成超级全满贯，呈现他对理想滑冰的持续追求。</p></div>
       </article>
       <article class="glass profile-book-card" data-book-index="3">
-        <div class="profile-book-cover"><img decoding="async" loading="lazy" src="assets/book-aoi-hono-4.jpg" alt="《苍炎Ⅳ：无限篇》封面"></div>
+        <div class="profile-book-cover"><img decoding="async" loading="lazy" src="./aoi-hono-cover-04.jpg?v=20260717b" onerror="this.onerror=null;this.src='./assets/book-aoi-hono-4.jpg?v=20260717b';" alt="《苍炎Ⅳ：无限篇》封面"></div>
         <div class="profile-book-copy"><div class="profile-book-meta" id="profileBookMeta3">第 4 卷 · 2023 · 扶桑社</div><h4 id="profileBookTitle3">《苍炎Ⅳ：无限篇》</h4><p id="profileBookDesc3">聚焦北京冬奥挑战四周半跳与竞技生涯的终章，并延伸至职业转向后的 PROLOGUE、GIFT 等全新创作。</p></div>
       </article>
     </div>
@@ -2941,7 +2941,7 @@ drawTrend();renderPosters();renderMilestones();
     if (!footer) return;
     const copy = {
       zh:{title:"管理员联系方式",x:"X：@Momoka_941207",red:"小红书：HY941207_66",meta:"羽生结弦 · ICE LEGACY 数字展览 · 数据范围 1994—2026"},
-      en:{title:"Administrator Contact",x:"X: @Momoka_941207",red:"Xiaohongshu: HY941207_66",meta:"Yuzuru Hanyu · ICE LEGACY DIGITAL EXHIBITION · DATA RANGE 1994—2026"},
+      en:{title:"Administrator Contact",x:"X: @Momoka_941207",red:"Red Book: HY941207_66",meta:"Yuzuru Hanyu · ICE LEGACY DIGITAL EXHIBITION · DATA RANGE 1994—2026"},
       ja:{title:"管理者連絡先",x:"X：@Momoka_941207",red:"小紅書：HY941207_66",meta:"羽生結弦 · ICE LEGACY デジタル展示 · データ範囲 1994—2026"}
     }[l];
     footer.innerHTML = `<div class="footer-contact"><strong>${esc(copy.title)}</strong><span>${esc(copy.x)}</span><span>${esc(copy.red)}</span></div><div class="footer-meta">${esc(copy.meta)}</div>`;
