@@ -1,17 +1,23 @@
-HanyuYuzuru_ICE_LEGACY_941207 更新说明
+HanyuYuzuru_ICE_LEGACY_941207 上传说明
 
-本版新增：
-1. 《苍炎》四本书保持原四卡片布局。
-2. 点击卡片可打开详细弹窗，显示出版信息、全书介绍、完整章节目录与逐章导读、版本封面说明及公开来源。
-3. 详细弹窗支持中文、English、日本語实时切换；切换语言时保持当前书卷。
-4. 支持键盘 Enter/Space 打开卡片，章节可逐项展开或一键全部展开/收起。
-5. 其余页面、图片、数据、倒计时、设计与功能均保留。
+1. 解压本压缩包。
+2. 将整个 HanyuYuzuru_ICE_LEGACY_941207 文件夹覆盖上传至 GitHub 仓库。
+3. 不要只上传 HTML，也不要直接上传 ZIP。
 
-上传方法：解压后将整个 HanyuYuzuru_ICE_LEGACY_941207 文件夹覆盖上传至 GitHub 仓库。不要直接上传 ZIP。
-Final update: corrected Aoi Honoo cover order 1–4 and adjusted the SEIMEI profile portrait to show the raised index finger.
+本版《苍炎》封面已双重保障：
+- 文件夹根目录包含 aoi-hono-1.jpg 至 aoi-hono-4.jpg。
+- assets 文件夹也包含同名备份。
+- 六个 HTML 内还嵌入了封面失败备用图，即使图片文件上传遗漏，卡片仍可显示。
 
+正确顺序：
+I《苍炎》
+II《苍炎 II—飞翔篇—》
+III《苍炎 III—究竟篇—》
+IV《苍炎 IV—无限篇—》
 
-2026-07-18 FINAL2
-- Correct Blue Flames I-IV order uses unique files under assets/aoi-hono-volume-*-correct-20260718.png.
-- Profile image replaced with the supplied PyeongChang 2018 index-finger photograph. Credit link: Dean Mouhtaropoulos / Getty Images.
-- Desktop profile layout compacted: two countdown cards share a row and typography/spacing are reduced.
+个人主页新增：
+- 距离下一次生日倒计时
+- 距离下一次 7 月 19 日倒计时
+- 自 1994-12-07 起累计天数（出生纪念日）
+- 自 2022-07-19 起累计天数（转职纪念日）
+以上均支持中文、英文、日文切换。
