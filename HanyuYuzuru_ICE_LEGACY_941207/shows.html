@@ -2799,10 +2799,11 @@ drawTrend();renderPosters();renderMilestones();
       .profile-books-head{display:grid;grid-template-columns:minmax(280px,.8fr) minmax(320px,1.2fr);gap:34px;align-items:end;margin-bottom:18px}
       .profile-books-head h3{margin:7px 0 0;color:#fff;font-size:clamp(25px,3vw,40px);line-height:1.12}
       .profile-books-head p{margin:0;color:#9eb4c3;line-height:1.75;font-size:13px;max-width:720px}
-      .profile-books-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+      .profile-books-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;align-items:start}
       .profile-book-card{display:grid;grid-template-rows:auto 1fr;overflow:hidden;border-radius:18px;background:linear-gradient(145deg,rgba(8,26,41,.9),rgba(3,13,24,.92));border:1px solid rgba(188,236,255,.18);min-width:0}
-      .profile-book-cover{height:310px;padding:18px;display:grid;place-items:center;background:radial-gradient(circle at 50% 28%,rgba(83,196,239,.16),transparent 54%),rgba(1,9,17,.78)}
-      .profile-book-cover img{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 18px 22px rgba(0,0,0,.38))}
+      .profile-book-cover{height:340px;padding:16px 16px 10px;display:grid;place-items:center;background:radial-gradient(circle at 50% 28%,rgba(83,196,239,.16),transparent 54%),rgba(1,9,17,.78);overflow:hidden}
+      .profile-book-cover img{width:100%;height:100%;object-fit:contain;object-position:center center;display:block;filter:drop-shadow(0 18px 22px rgba(0,0,0,.38))}
+
       .profile-book-copy{padding:17px 17px 20px;display:flex;flex-direction:column}
       .profile-book-meta{color:#8edff7;font-size:9px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;line-height:1.5}
       .profile-book-card h4{margin:8px 0 9px;color:#fff;font-size:18px;line-height:1.3}
@@ -2812,7 +2813,7 @@ drawTrend();renderPosters();renderMilestones();
       .modal.competition-list-modal .modal-title h2,.modal.competition-list-modal #modalTitle{font-size:clamp(28px,2.45vw,42px)!important;line-height:1.12!important;overflow-wrap:normal!important;word-break:keep-all!important}
       @media(max-width:1100px){.profile-books-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
       @media(max-width:900px){#sources .source-card.glass,.simple-source-group{grid-template-columns:1fr!important}.simple-source-links{grid-template-columns:1fr}.final-costume-controls{grid-template-columns:1fr}.profile-books-head{grid-template-columns:1fr}}
-      @media(max-width:700px){.profile-books-grid{grid-template-columns:1fr}.profile-book-cover{height:340px}.stable-costume-card img{height:210px}.stable-competition-list{max-height:54vh}.modal.competition-list-modal .modal-title{padding:46px 58px 20px 16px!important}.modal.competition-list-modal .modal-title h2,.modal.competition-list-modal #modalTitle{font-size:clamp(25px,8vw,34px)!important}footer{display:grid!important;gap:14px!important;padding:22px 18px!important}.footer-meta{text-align:left}.footer-contact span,.footer-meta{white-space:normal}}
+      @media(max-width:700px){.profile-books-grid{grid-template-columns:1fr}.profile-book-cover{height:380px}.stable-costume-card img{height:210px}.stable-competition-list{max-height:54vh}.modal.competition-list-modal .modal-title{padding:46px 58px 20px 16px!important}.modal.competition-list-modal .modal-title h2,.modal.competition-list-modal #modalTitle{font-size:clamp(25px,8vw,34px)!important}footer{display:grid!important;gap:14px!important;padding:22px 18px!important}.footer-meta{text-align:left}.footer-contact span,.footer-meta{white-space:normal}}
     `;
     document.head.appendChild(style);
   }
