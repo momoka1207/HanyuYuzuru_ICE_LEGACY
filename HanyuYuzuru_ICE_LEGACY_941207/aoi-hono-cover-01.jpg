@@ -583,6 +583,18 @@ body::after{
   .orbit{right:-8vw!important;top:126px!important;width:390px!important;height:390px!important}
   .hero-stats{grid-template-columns:repeat(3,1fr)!important}.hero-stat:nth-child(n+4){display:none!important}
 }
+#competitionMapPins{display:none!important}
+.nb-world-map .atlas-country-pin{cursor:pointer;outline:none}
+.nb-world-map .atlas-country-pin>*{pointer-events:none}
+.nb-world-map .atlas-pin-halo{fill:rgba(106,229,255,.14);stroke:rgba(117,232,255,.18);stroke-width:1;vector-effect:non-scaling-stroke}
+.nb-world-map .atlas-pin-dot{fill:#e9fbff;stroke:#052034;stroke-width:2;vector-effect:non-scaling-stroke;filter:drop-shadow(0 0 8px rgba(113,233,255,.9))}
+.nb-world-map .atlas-country-pin.has-results .atlas-pin-dot,.nb-world-map .atlas-country-pin.is-selected .atlas-pin-dot{fill:#4ee8ff}
+.nb-world-map .atlas-country-pin.is-selected .atlas-pin-halo{fill:rgba(78,232,255,.28);stroke:rgba(195,249,255,.8)}
+.nb-world-map .atlas-pin-count-bg{fill:#e8c779;stroke:#06111d;stroke-width:2;vector-effect:non-scaling-stroke}
+.nb-world-map .atlas-pin-count{fill:#07131c;font-size:11px;font-weight:950;font-family:Inter,"Microsoft YaHei",sans-serif}
+.nb-world-map .atlas-pin-label{fill:#eaffff;stroke:#03101a;stroke-width:6px;paint-order:stroke fill;font-size:17px;font-weight:900;font-family:Inter,"Microsoft YaHei",sans-serif;opacity:0;transition:opacity .15s ease}
+.nb-world-map .atlas-country-pin:hover .atlas-pin-label,.nb-world-map .atlas-country-pin:focus .atlas-pin-label,.nb-world-map .atlas-country-pin.is-selected .atlas-pin-label{opacity:1}
+
 </style>
 
 <style id="final-microcopy-image-fill-style">
@@ -2273,9 +2285,79 @@ drawTrend();renderPosters();renderMilestones();
   function populateFilters(){applyLoc();const l=lang();fillSelect('compYear',[...new Set(competitions.map(c=>c.year))].sort((a,b)=>a-b),l==='zh'?'全部年份':l==='ja'?'すべての年':'All years',v=>v);fillSelect('compStage',[...new Set(competitions.map(c=>c.stage))],l==='zh'?'全部阶段':l==='ja'?'すべての段階':'All stages',v=>stageLabel(v,l));fillSelect('compType',[...new Set(competitions.map(c=>c.type))].sort(),l==='zh'?'全部类型':l==='ja'?'すべての種別':'All types',v=>typeLabel(v,l));fillSelect('compLocation',[...new Set(competitions.map(c=>keyOf(c.location)))].sort(),text[l].allCountry,v=>countryNames[l][v]||v);const medal=$('#compMedal');if(medal){const cur=medal.value||'all';medal.innerHTML=`<option value="all">${l==='zh'?'全部成绩':l==='ja'?'すべての成績':'All results'}</option><option value="Gold">${l==='zh'?'金牌':l==='ja'?'金':'Gold'}</option><option value="Silver">${l==='zh'?'银牌':l==='ja'?'銀':'Silver'}</option><option value="Bronze">${l==='zh'?'铜牌':l==='ja'?'銅':'Bronze'}</option><option value="none">${l==='zh'?'非领奖台／无排名':l==='ja'?'表彰台外／順位なし':'No podium / no rank'}</option>`;if([...medal.options].some(o=>o.value===cur))medal.value=cur}const search=$('#compSearch');if(search)search.placeholder=l==='zh'?'搜索比赛名、赛季、编号……':l==='ja'?'大会名、シーズン、IDで検索…':'Search event, season, or ID…';const more=$('#loadMoreCompetitions');if(more)more.textContent=text[l].load}
   function row(c){const l=lang();return `<article class="competition-row" data-comp-id="${c.id}" tabindex="0"><div class="comp-year">${c.year}</div><div class="comp-name"><b>${compName(c,l)}</b><span>${c.season} · ${stageLabel(c.stage,l)} · ${levelLabel(c.level,l)} · ${c.id}${c.worldRecord?' · WR':''}</span></div><div class="comp-type">${typeLabel(c.type,l)}</div><div class="comp-location">${locLabel(c.location,l)}</div><div class="comp-result"><span class="medal ${c.medal||''}">${medalLabel(c,l)}</span>${c.score!=null?`<span class="comp-location">${Number(c.score).toFixed(2)}</span>`:''}</div></article>`}
   function render(reset=false){if(reset)limit=10;populateFilters();const list=filtered(),n=Math.min(limit,list.length),l=lang();const count=$('#compCount'),box=$('#competitionList');if(count)count.textContent=text[l].count(list.length,n);if(box)box.innerHTML=list.slice(0,n).map(row).join('');$$('#competitionList [data-comp-id]').forEach(el=>{const open=()=>window.openCompetition?.(el.dataset.compId);el.addEventListener('click',open,{once:false});el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')open()})});const more=$('#loadMoreCompetitions');if(more)more.style.display=n<list.length?'block':'none';paintMap(list)}
-  function pos(stage,svg,lon,lat){const vb=svg.viewBox.baseVal,sw=stage.clientWidth||1,sh=stage.clientHeight||1,sc=Math.min(sw/vb.width,sh/vb.height),ox=(sw-vb.width*sc)/2,oy=(sh-vb.height*sc)/2,x=(lon+180)/360*vb.width,y=(90-lat)/180*vb.height;return{left:(ox+x*sc)/sw*100,top:(oy+y*sc)/sh*100}}
-  function paintMap(currentList){const stage=$('.world-map-stage'),svg=$('.nb-world-map'),pins=$('#competitionMapPins'),strip=$('#competitionMapEvents'),badge=$('#competitionMapBadge');if(!stage||!svg||!pins)return;applyLoc();const all=byCountry(competitions),list=Array.isArray(currentList)?currentList:filtered(),active=byCountry(list),selected=$('#compLocation')?.value||'all',l=lang();pins.innerHTML='';all.forEach(r=>{const shown=active.get(r.key)||r;const p=pos(stage,svg,centers[r.key].lon,centers[r.key].lat);const b=document.createElement('button');b.className='ultimate-country-pin'+(active.has(r.key)||selected===r.key?' active':'');b.style.left=p.left+'%';b.style.top=p.top+'%';b.dataset.finalCountry=r.key;b.setAttribute('aria-label',countryNames[l][r.key]||r.key);b.innerHTML=`<span class="dot"></span><span class="num">${shown.events.length}</span><span class="lab">${countryNames[l][r.key]||r.key}</span>`;pins.appendChild(b)});if(badge)badge.textContent=selected==='all'?text[l].badge(all.size):`${text[l].lit(countryNames[l][selected]||selected)} · ${list.length}`;if(strip){const rows=[...(list.length?active:all).values()].sort((a,b)=>b.events.length-a.events.length);strip.classList.add('country-summary');strip.innerHTML=rows.map(r=>`<button class="map-country-card ${selected===r.key?'active':''}" data-final-country="${r.key}"><span>${text[l].node}</span><b>${countryNames[l][r.key]||r.key} · ${r.events.length}</b><em>${[...r.cities].slice(0,4).map(c=>(cityNames[c]||[c,c,c])[l==='zh'?0:l==='en'?1:2]).join(' / ')}</em></button>`).join('')}}
-  function bind(){['compSearch','compYear','compStage','compType','compLocation','compMedal'].forEach(id=>{const el=$('#'+id);if(!el||el.dataset.cleanCompBound)return;el.dataset.cleanCompBound='1';el.addEventListener(id==='compSearch'?'input':'change',e=>{e.stopImmediatePropagation();render(true)},true)});const more=$('#loadMoreCompetitions');if(more&&!more.dataset.cleanCompBound){more.dataset.cleanCompBound='1';more.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();limit+=10;render(false)},true)}if(!window.__hanyuCompetitionResizeBound){window.__hanyuCompetitionResizeBound=true;window.addEventListener('resize',()=>paintMap(),{passive:true})}}
+  const mapShapeSelectors={
+    Japan:{selector:'.Japan',fx:.56,fy:.56},China:{selector:'.China',fx:.50,fy:.50},Korea:{selector:'#KR',fx:.50,fy:.50},
+    Canada:{selector:'.Canada',fx:.55,fy:.58},USA:{selector:'.United.States',fx:.55,fy:.55},Russia:{selector:'.Russian.Federation',fx:.43,fy:.57},
+    Finland:{selector:'#FI',fx:.50,fy:.52},France:{selector:'.France',fx:.50,fy:.50},Italy:{selector:'.Italy',fx:.49,fy:.48},
+    Poland:{selector:'#PL',fx:.50,fy:.50},Croatia:{selector:'#HR',fx:.50,fy:.50},Denmark:{selector:'.Denmark',fx:.50,fy:.52},
+    Sweden:{selector:'#SE',fx:.50,fy:.52},Germany:{selector:'#DE',fx:.50,fy:.50},Netherlands:{selector:'#NL',fx:.50,fy:.50},
+    Bulgaria:{selector:'#BG',fx:.50,fy:.50},Spain:{selector:'#ES',fx:.50,fy:.50}
+  };
+  function countryShapeElements(svg,key){
+    const cfg=mapShapeSelectors[key];
+    if(!cfg)return [];
+    return [...svg.querySelectorAll(cfg.selector)].filter(el=>typeof el.getBBox==='function');
+  }
+  function countryAnchor(svg,key){
+    const cfg=mapShapeSelectors[key];
+    const shapes=countryShapeElements(svg,key);
+    if(!cfg||!shapes.length)return null;
+    const shape=shapes.map(el=>({el,b:el.getBBox()})).sort((a,b)=>(b.b.width*b.b.height)-(a.b.width*a.b.height))[0];
+    const b=shape.b,target={x:b.x+b.width*cfg.fx,y:b.y+b.height*cfg.fy};
+    const inside=(x,y)=>{try{return typeof shape.el.isPointInFill==='function'&&shape.el.isPointInFill(new DOMPoint(x,y))}catch(_){return false}};
+    if(inside(target.x,target.y))return target;
+    let best=null,bestScore=Infinity;
+    for(let iy=1;iy<=19;iy++)for(let ix=1;ix<=19;ix++){
+      const x=b.x+b.width*(ix/20),y=b.y+b.height*(iy/20);
+      if(!inside(x,y))continue;
+      const dx=(x-target.x)/(b.width||1),dy=(y-target.y)/(b.height||1),score=dx*dx+dy*dy;
+      if(score<bestScore){bestScore=score;best={x,y}}
+    }
+    return best||target;
+  }
+  function svgNode(tag,attrs={}){
+    const el=document.createElementNS('http://www.w3.org/2000/svg',tag);
+    Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,String(v)));
+    return el;
+  }
+  function paintMap(currentList){
+    const svg=$('.nb-world-map'),htmlPins=$('#competitionMapPins'),strip=$('#competitionMapEvents'),badge=$('#competitionMapBadge');
+    if(!svg)return;
+    if(htmlPins){htmlPins.innerHTML='';htmlPins.style.display='none'}
+    applyLoc();
+    const all=byCountry(competitions),list=Array.isArray(currentList)?currentList:filtered(),active=byCountry(list),selected=$('#compLocation')?.value||'all',l=lang();
+    svg.querySelector('#competitionSvgPinLayer')?.remove();
+    svg.querySelectorAll('.hot-country,.active-country').forEach(el=>el.classList.remove('hot-country','active-country'));
+    const layer=svgNode('g',{id:'competitionSvgPinLayer','aria-label':'Competition country markers'});
+    all.forEach(r=>{
+      const anchor=countryAnchor(svg,r.key);
+      if(!anchor)return;
+      const shown=active.get(r.key)||r;
+      const isSelected=selected===r.key;
+      const hasResults=active.has(r.key);
+      countryShapeElements(svg,r.key).forEach(el=>{el.classList.add('hot-country');if(isSelected)el.classList.add('active-country')});
+      const g=svgNode('g',{
+        class:`atlas-country-pin${hasResults?' has-results':''}${isSelected?' is-selected':''}`,
+        transform:`translate(${anchor.x.toFixed(2)} ${anchor.y.toFixed(2)})`,
+        tabindex:'0',role:'button','data-final-country':r.key,'aria-label':`${countryNames[l][r.key]||r.key} · ${shown.events.length}`
+      });
+      const title=svgNode('title');title.textContent=`${countryNames[l][r.key]||r.key} · ${shown.events.length}`;g.appendChild(title);
+      g.appendChild(svgNode('circle',{class:'atlas-pin-halo',cx:0,cy:0,r:15}));
+      g.appendChild(svgNode('circle',{class:'atlas-pin-dot',cx:0,cy:0,r:6}));
+      g.appendChild(svgNode('circle',{class:'atlas-pin-count-bg',cx:14,cy:-14,r:10}));
+      const count=svgNode('text',{class:'atlas-pin-count',x:14,y:-10,'text-anchor':'middle'});count.textContent=shown.events.length;g.appendChild(count);
+      const label=svgNode('text',{class:'atlas-pin-label',x:22,y:6});label.textContent=countryNames[l][r.key]||r.key;g.appendChild(label);
+      layer.appendChild(g);
+    });
+    svg.appendChild(layer);
+    if(badge)badge.textContent=selected==='all'?text[l].badge(all.size):`${text[l].lit(countryNames[l][selected]||selected)} · ${list.length}`;
+    if(strip){
+      const rows=[...(list.length?active:all).values()].sort((a,b)=>b.events.length-a.events.length);
+      strip.classList.add('country-summary');
+      strip.innerHTML=rows.map(r=>`<button class="map-country-card ${selected===r.key?'active':''}" data-final-country="${r.key}"><span>${text[l].node}</span><b>${countryNames[l][r.key]||r.key} · ${r.events.length}</b><em>${[...r.cities].slice(0,4).map(c=>(cityNames[c]||[c,c,c])[l==='zh'?0:l==='en'?1:2]).join(' / ')}</em></button>`).join('');
+    }
+  }
+  function bind(){['compSearch','compYear','compStage','compType','compLocation','compMedal'].forEach(id=>{const el=$('#'+id);if(!el||el.dataset.cleanCompBound)return;el.dataset.cleanCompBound='1';el.addEventListener(id==='compSearch'?'input':'change',e=>{e.stopImmediatePropagation();render(true)},true)});const more=$('#loadMoreCompetitions');if(more&&!more.dataset.cleanCompBound){more.dataset.cleanCompBound='1';more.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();limit+=10;render(false)},true)}}
   window.renderCompetitions=render;window.paintCountryMap=paintMap;window.__hanyuCompetitionRefresh=()=>render(false);window.__hanyuCompetitionTypeLabel=(v,l=lang())=>typeLabel(v,l);window.__hanyuCompetitionStageLabel=(v,l=lang())=>stageLabel(v,l);window.__hanyuCompetitionLevelLabel=(v,l=lang())=>levelLabel(v,l);window.__hanyuCompetitionLocationLabel=(v,l=lang())=>locLabel(v,l);
   bind();render(false);
 })();
@@ -4338,12 +4420,35 @@ drawTrend();renderPosters();renderMilestones();
   const pages={home:'index.html',profile:'profile.html',competition:'competition.html',shows:'shows.html',costumes:'costumes.html',sources:'sources.html'};
   const selectors={home:'.hero,#overview',profile:'#profile',competition:'#competitions',shows:'#shows',costumes:'#costumes',sources:'#sources'};
   const titleSuffix={zh:{home:'生涯总览',profile:'个人主页',competition:'比赛档案',shows:'职业冰演',costumes:'考斯滕',sources:'官方网站'},en:{home:'Career Overview',profile:'Profile',competition:'Competition Archive',shows:'Professional Ice Shows',costumes:'Costumes',sources:'Official Sources'},ja:{home:'キャリア概要',profile:'プロフィール',competition:'競技記録',shows:'プロアイスショー',costumes:'衣装',sources:'公式情報'}};
-  function current(){return (document.body.className.match(/page-([a-z]+)/)||[])[1]||'home'}
-  function activateImages(){const key=current(),root=document.querySelector(selectors[key]);if(!root)return;if(key==='profile'){const p=document.querySelector('#profilePortrait');if(p&&!p.getAttribute('src')&&typeof profileImage!=='undefined')p.src=profileImage}const imgs=[...root.querySelectorAll('img[src]')];const priorityCount=key==='home'?4:key==='shows'||key==='costumes'?5:2;imgs.forEach((img,i)=>{img.decoding='async';img.referrerPolicy='no-referrer';img.loading=i<priorityCount?'eager':'lazy';img.fetchPriority=i<priorityCount?'high':'auto'})}
-  function setPage(key,{push=true,scroll=true}={}){if(!pages[key])key='home';Object.keys(pages).forEach(k=>document.body.classList.toggle('page-'+k,k===key));document.body.classList.add('paged-page');document.querySelectorAll('.topbar nav a[data-paged-link]').forEach(a=>{if(a.dataset.pagedLink===key)a.setAttribute('data-active-page','1');else a.removeAttribute('data-active-page')});if(push&&location.protocol!=='about:'&&location.protocol!=='data:'){history.pushState({page:key},'',pages[key])}const l=document.documentElement.dataset.lang||'zh';document.title=`${l==='ja'?'羽生結弦':l==='en'?'Yuzuru Hanyu':'羽生结弦'} ICE LEGACY｜${titleSuffix[l]?.[key]||titleSuffix.en[key]}`;activateImages();if(scroll)window.scrollTo({top:0,left:0,behavior:'auto'})}
-  document.addEventListener('click',e=>{const a=e.target.closest('a[href]');if(!a||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||a.target==='_blank'||a.hasAttribute('download'))return;const raw=(a.getAttribute('href')||'').split('#')[0].split('?')[0].replace(/^.*\//,'');const key=a.dataset.pagedLink||Object.entries(pages).find(([,filename])=>filename===raw)?.[0];if(!key)return;e.preventDefault();e.stopImmediatePropagation();setPage(key)},true);
-  window.addEventListener('popstate',e=>setPage(e.state?.page||Object.entries(pages).find(([,v])=>location.pathname.endsWith(v))?.[0]||'home',{push:false,scroll:false}));
-  window.__hanyuSetPage=setPage;window.__hanyuActivatePageImages=activateImages;setPage(current(),{push:false,scroll:false});
+  function keyFromPath(){
+    const file=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+    return Object.entries(pages).find(([,name])=>name===file)?.[0]||null;
+  }
+  function keyFromBody(){return (document.body.className.match(/(?:^|\s)page-([a-z]+)(?:\s|$)/)||[])[1]||null}
+  function activateImages(){
+    const key=keyFromPath()||keyFromBody()||'home';
+    const root=document.querySelector(selectors[key]);
+    if(!root)return;
+    const imgs=[...root.querySelectorAll('img[src]')];
+    const priorityCount=key==='home'?4:(key==='shows'||key==='costumes'?5:2);
+    imgs.forEach((img,i)=>{img.decoding='async';img.loading=i<priorityCount?'eager':'lazy';img.fetchPriority=i<priorityCount?'high':'auto'});
+  }
+  function applyPage(key,{scroll=false}={}){
+    if(!pages[key])key=keyFromPath()||keyFromBody()||'home';
+    Object.keys(pages).forEach(k=>document.body.classList.toggle('page-'+k,k===key));
+    document.body.classList.add('paged-page');
+    document.querySelectorAll('.topbar nav a[data-paged-link]').forEach(a=>{
+      if(a.dataset.pagedLink===key)a.setAttribute('data-active-page','1');
+      else a.removeAttribute('data-active-page');
+    });
+    const l=document.documentElement.dataset.lang||'zh';
+    document.title=`${l==='ja'?'羽生結弦':l==='en'?'Yuzuru Hanyu':'羽生结弦'} ICE LEGACY｜${titleSuffix[l]?.[key]||titleSuffix.en[key]}`;
+    activateImages();
+    if(scroll)window.scrollTo({top:0,left:0,behavior:'auto'});
+  }
+  window.__hanyuSetPage=(key,options={})=>applyPage(key,{scroll:!!options.scroll});
+  window.__hanyuActivatePageImages=activateImages;
+  applyPage(keyFromPath()||keyFromBody()||'home');
 })();
 </script>
 <style id="lightweight-final-polish-style">
