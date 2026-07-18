@@ -830,6 +830,7 @@ body::after{
 #profile .birthday-since .count-unit b,#profile .july19-since .count-unit b{font-size:29px!important;line-height:1!important}
 #profile .birthday-since .count-unit span,#profile .july19-since .count-unit span{font-size:10px!important;margin-top:7px!important;display:block!important}
 #profile .countdown-title{font-size:10.5px!important}
+#profile .timezone-basis-note{grid-column:1/-1!important;margin:6px 2px 0!important;color:var(--muted)!important;font-size:9px!important;line-height:1.4!important;text-align:right!important;letter-spacing:.04em!important}
 #profile .count-unit b{font-size:23px!important}
 #profile .count-unit span{font-size:9px!important}
 #profile .profile-book-cover img{display:block!important;position:static!important;width:auto!important;height:auto!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important;object-position:center center!important;filter:drop-shadow(0 18px 22px rgba(0,0,0,.38));content-visibility:visible!important;transform:none!important}
@@ -843,7 +844,7 @@ body::after{
 </style>
 
 </head>
-<body class="paged-page page-home">
+<body class="paged-page page-profile">
   <header class="topbar"><div class="brand">YUZURU HANYU <span>ICE LEGACY</span></div><nav><a href="index.html" data-paged-link="home">生涯总览／里程碑</a><a href="profile.html" data-paged-link="profile">个人主页</a><a href="competition.html" data-paged-link="competition">比赛档案</a><a href="shows.html" data-paged-link="shows">职业冰演</a><a href="costumes.html" data-paged-link="costumes">考斯滕</a><a href="sources.html" data-paged-link="sources">官方网站</a></nav><div class="source-chip"></div></header>
 <section class="hero"><div class="hero-bg"></div><div class="producer-credit">&#21046;&#20316;&#20154; &#183; momoka1207</div><div class="orbit"></div><div class="hero-content"><div class="kicker">A DIGITAL EXHIBITION · 1994—2026</div><h1>羽生结弦<small>FROM COMPETITION TO ICE STORY</small></h1><p class="hero-copy">沿着比赛、纪录、冬奥荣耀与职业冰演的轨迹，观看一个运动员如何不断拓展冰上表达的边界。</p><div class="hero-actions"><a class="btn primary" href="shows.html">进入职业冰演展厅</a><a class="btn" href="#overview">探索关键里程碑</a></div></div><a class="hero-credit" href="https://www.afpbb.com/articles/-/3162907" target="_blank" rel="noreferrer">Photo: AFP / Javier Soriano · PyeongChang 2018 medal ceremony</a><div class="hero-stats"><div class="hero-stat"><b>102</b><span>比赛记录</span></div><div class="hero-stat"><b>62</b><span>冠军次数</span></div><div class="hero-stat"><b>87</b><span>领奖台次数</span></div><div class="hero-stat"><b>2</b><span>冬奥单人金牌</span></div><div class="hero-stat"><b>36</b><span>职业冰演场次</span></div></div></section>
 
@@ -874,7 +875,7 @@ body::after{
     <article class="glass profile-copy"><div class="section-label">Biography</div><p class="lead">他的轨迹并不是一条只通向奖牌的直线。它穿过伤病、震灾、世界纪录与万众注视，也穿过一次次重新理解“为何滑冰”的时刻。竞技时代结束以后，冰面没有成为过去——它被扩展成剧场、记忆、祈愿与仍在书写的未来。</p>
       <div class="life-line"><b>1994</b><span>出生于宫城县仙台市。</span><b>1999</b><span>开始学习花样滑冰。</span><b>2004</b><span>现有比赛档案的起点。</span><b>2014 / 2018</b><span>连续两届获得冬奥会男子单人滑金牌。</span><b>2022</b><span>结束竞技生涯，转为职业运动员。</span><b>2022—2026</b><span>以 PROLOGUE、GIFT、RE_PRAY、Echoes of Life、REALIVE 等作品拓展 ICE STORY。</span></div>
       <div class="socials"><a href="https://www.youtube.com/@hanyuyuzuru2624" target="_blank" rel="noreferrer">YouTube ↗</a><a href="https://x.com/YUZURUofficial_" target="_blank" rel="noreferrer">X / Official Staff ↗</a><a href="https://www.instagram.com/yuzuruofficial_/" target="_blank" rel="noreferrer">Instagram ↗</a><a href="https://www.olympics.com/en/athletes/yuzuru-hanyu" target="_blank" rel="noreferrer">Olympics Profile ↗</a></div>
-      <div class="countdown"><div class="countdown-title"><span>距离下一次 12 月 7 日</span><span id="birthdayYear"></span></div><div class="countdown-clock"><div class="count-unit"><b id="countDays">--</b><span>Days</span></div><div class="count-unit"><b id="countHours">--</b><span>Hours</span></div><div class="count-unit"><b id="countMinutes">--</b><span>Minutes</span></div><div class="count-unit"><b id="countSeconds">--</b><span>Seconds</span></div></div></div><div class="countdown july19-countdown" id="july19Countdown"><div class="countdown-title"><span id="july19NextTitle">距离下一次 7 月 19 日</span><span id="july19Year"></span></div><div class="countdown-clock"><div class="count-unit"><b id="july19Days">--</b><span>天</span></div><div class="count-unit"><b id="july19Hours">--</b><span>小时</span></div><div class="count-unit"><b id="july19Minutes">--</b><span>分钟</span></div><div class="count-unit"><b id="july19Seconds">--</b><span>秒</span></div></div></div><div class="countdown birthday-since" id="birthdaySince"><div class="countdown-title"><span id="birthdaySinceTitle">距离 1994 年 12 月 7 日已经过去</span><span id="birthdayAnniversaryLabel">出生纪念日</span></div><div class="countdown-clock single"><div class="count-unit"><b id="sinceBirthdayDays">--</b><span>天</span></div></div></div><div class="countdown july19-since" id="july19Since"><div class="countdown-title"><span id="july19SinceTitle">距离 2022 年 7 月 19 日已经过去</span><span id="july19AnniversaryLabel">转职纪念日</span></div><div class="countdown-clock single"><div class="count-unit"><b id="sinceJuly19Days">--</b><span>天</span></div></div></div>
+      <div class="countdown"><div class="countdown-title"><span>距离下一次 12 月 7 日</span><span id="birthdayYear"></span></div><div class="countdown-clock"><div class="count-unit"><b id="countDays">--</b><span>Days</span></div><div class="count-unit"><b id="countHours">--</b><span>Hours</span></div><div class="count-unit"><b id="countMinutes">--</b><span>Minutes</span></div><div class="count-unit"><b id="countSeconds">--</b><span>Seconds</span></div></div></div><div class="countdown july19-countdown" id="july19Countdown"><div class="countdown-title"><span id="july19NextTitle">距离下一次 7 月 19 日</span><span id="july19Year"></span></div><div class="countdown-clock"><div class="count-unit"><b id="july19Days">--</b><span>天</span></div><div class="count-unit"><b id="july19Hours">--</b><span>小时</span></div><div class="count-unit"><b id="july19Minutes">--</b><span>分钟</span></div><div class="count-unit"><b id="july19Seconds">--</b><span>秒</span></div></div></div><div class="countdown birthday-since" id="birthdaySince"><div class="countdown-title"><span id="birthdaySinceTitle">距离 1994 年 12 月 7 日已经过去</span><span id="birthdayAnniversaryLabel">出生纪念日</span></div><div class="countdown-clock single"><div class="count-unit"><b id="sinceBirthdayDays">--</b><span>天</span></div></div></div><div class="countdown july19-since" id="july19Since"><div class="countdown-title"><span id="july19SinceTitle">距离 2022 年 7 月 19 日已经过去</span><span id="july19AnniversaryLabel">转职纪念日</span></div><div class="countdown-clock single"><div class="count-unit"><b id="sinceJuly19Days">--</b><span>天</span></div></div></div><div class="timezone-basis-note" id="timeZoneBasisNote">基于北京时间</div>
     </article>
   </div>
 
@@ -2196,11 +2197,42 @@ function filteredCompetitions(){const q=$('#compSearch').value.trim().toLowerCas
 function renderCompetitions(reset=false){if(reset)competitionLimit=10;const list=filteredCompetitions();$('#compCount').textContent=`找到 ${list.length} 条记录 · 显示 ${Math.min(list.length,competitionLimit)} 条`;$('#competitionList').innerHTML=list.slice(0,competitionLimit).map(c=>`<article class="competition-row" data-comp-id="${c.id}" tabindex="0"><div class="comp-year">${c.year}</div><div class="comp-name"><b>${c.nameEn}</b><span>${c.season} · ${c.stage} · ${c.level} · ${c.id}${c.worldRecord?' · WR':''}</span></div><div class="comp-type">${c.type}</div><div class="comp-location">${c.location}</div><div class="comp-result"><span class="medal ${c.medal||''}">${c.medal||('Rank '+(c.rank??'—'))}</span>${c.score!=null?`<span class="comp-location">${c.score.toFixed(2)}</span>`:''}</div></article>`).join('');document.querySelectorAll('[data-comp-id]').forEach(row=>{const open=()=>openCompetition(row.dataset.compId);row.addEventListener('click',open);row.addEventListener('keydown',e=>{if(e.key==='Enter')open()})});$('#loadMoreCompetitions').style.display=competitionLimit<list.length?'block':'none';}
 function openCompetition(id){const c=competitions.find(x=>x.id===id);$('#modalHero').classList.toggle('no-photo',!c.image);$('#modalImage').src=c.image||'';$('#modalImage').alt=c.nameEn+' 官方现场图';$('#modalOverline').textContent=`COMPETITION ARCHIVE · ${c.year} · ${c.id}`;$('#modalTitle').textContent=c.nameEn;const source=c.source?`<a class="official-link" href="${c.source}" target="_blank" rel="noreferrer">查看官方成绩来源 ↗</a>`:'<span class="status-wait">行级官方来源待补</span>';const photoSource=competitionPhotoSources[c.id];const photoLink=photoSource?`<a class="official-link" href="${photoSource.url}" target="_blank" rel="noreferrer">查看可核验官方现场图 ↗</a><small class="image-credit">${photoSource.credit}</small>`:'';$('#modalBody').innerHTML=`<div class="modal-copy"><div><p>${c.season} 赛季，约 ${c.age} 岁。生涯阶段：${c.stage}；赛事类型：${c.type}；级别：${c.level}；地点：${c.location}。</p><p>${c.image?'已绑定该场官方现场图片。':'目前尚未找到可确认属于该场比赛且可安全内嵌的官方图片，因此不使用替代照片。'}</p>${source}${photoLink}</div><div class="facts"><div class="fact"><span>Overall</span><b>Rank ${c.rank??'—'}${c.medal?' · '+c.medal:''}</b></div><div class="fact"><span>Total score</span><b>${c.score!=null?c.score.toFixed(2):'—'}</b></div><div class="fact"><span>SP</span><b>${c.spRank??'—'} / ${c.spScore??'—'}</b></div><div class="fact"><span>FS</span><b>${c.fsRank??'—'} / ${c.fsScore??'—'}</b></div><div class="fact"><span>Verification</span><b>${c.confidence||'待核对'}</b></div></div></div>`;openModal()}
 function renderCostumes(){$('#costumeGrid').innerHTML=costumeCatalog.map(c=>`<article class="costume"><div class="costume-art" style="--tone:${c.tone}"><span>OFFICIAL PHOTO PENDING</span></div><div class="costume-body"><div class="season">${c.season} · ${c.kind}</div><h3>${c.program}</h3><p>${c.note}</p><span class="status-wait">官方图片 / 摄影版权待补</span></div></article>`).join('')}
-function updateBirthdayCountdown(){const now=new Date();let year=now.getFullYear();let next=new Date(year,11,7,0,0,0);if(now>=next)next=new Date(++year,11,7,0,0,0);const diff=Math.max(0,next-now),days=Math.floor(diff/86400000),hours=Math.floor(diff%86400000/3600000),minutes=Math.floor(diff%3600000/60000),seconds=Math.floor(diff%60000/1000),l=document.documentElement.dataset.lang||'zh';$('#birthdayYear').textContent=l==='en'?`${year} Birthday`:l==='ja'?`${year}年の誕生日`:`${year} 年生日`;$('#countDays').textContent=String(days).padStart(2,'0');$('#countHours').textContent=String(hours).padStart(2,'0');$('#countMinutes').textContent=String(minutes).padStart(2,'0');$('#countSeconds').textContent=String(seconds).padStart(2,'0');const todayUtc=Date.UTC(now.getFullYear(),now.getMonth(),now.getDate()),birthUtc=Date.UTC(1994,11,7),sinceBirthDays=Math.max(0,Math.floor((todayUtc-birthUtc)/86400000));const sinceBirth=document.getElementById('sinceBirthdayDays');if(sinceBirth)sinceBirth.textContent=String(sinceBirthDays)}
+const HANYU_TIME_ZONE_BY_LANG={zh:'Asia/Shanghai',en:'Europe/London',ja:'Asia/Tokyo'};
+function hanyuTimeZoneForLang(l=document.documentElement.dataset.lang||'zh'){return HANYU_TIME_ZONE_BY_LANG[l]||HANYU_TIME_ZONE_BY_LANG.zh}
+function hanyuZonedParts(date,timeZone){
+  const values={};
+  new Intl.DateTimeFormat('en-CA',{timeZone,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(date).forEach(part=>{if(part.type!=='literal')values[part.type]=Number(part.value)});
+  return values;
+}
+function hanyuTimeZoneOffsetMs(date,timeZone){
+  const p=hanyuZonedParts(date,timeZone);
+  return Date.UTC(p.year,p.month-1,p.day,p.hour,p.minute,p.second)-Math.floor(date.getTime()/1000)*1000;
+}
+function hanyuZonedDate(year,month,day,hour,minute,second,timeZone){
+  const wallTime=Date.UTC(year,month-1,day,hour,minute,second),probe=new Date(wallTime);
+  let offset=hanyuTimeZoneOffsetMs(probe,timeZone),result=new Date(wallTime-offset),refined=hanyuTimeZoneOffsetMs(result,timeZone);
+  if(refined!==offset)result=new Date(wallTime-refined);
+  return result;
+}
+function hanyuUpdateTimeZoneBasisNote(l=document.documentElement.dataset.lang||'zh'){
+  const note=document.getElementById('timeZoneBasisNote');
+  if(note)note.textContent={zh:'基于北京时间',en:'Based on London time',ja:'日本時間基準'}[l]||'基于北京时间';
+}
+function updateBirthdayCountdown(){
+  const now=new Date(),l=document.documentElement.dataset.lang||'zh',timeZone=hanyuTimeZoneForLang(l),local=hanyuZonedParts(now,timeZone);
+  let year=local.year,next=hanyuZonedDate(year,12,7,0,0,0,timeZone);
+  if(now>=next)next=hanyuZonedDate(++year,12,7,0,0,0,timeZone);
+  const diff=Math.max(0,next-now),days=Math.floor(diff/86400000),hours=Math.floor(diff%86400000/3600000),minutes=Math.floor(diff%3600000/60000),seconds=Math.floor(diff%60000/1000);
+  $('#birthdayYear').textContent=l==='en'?`${year} Birthday`:l==='ja'?`${year}年の誕生日`:`${year} 年生日`;
+  $('#countDays').textContent=String(days).padStart(2,'0');$('#countHours').textContent=String(hours).padStart(2,'0');$('#countMinutes').textContent=String(minutes).padStart(2,'0');$('#countSeconds').textContent=String(seconds).padStart(2,'0');
+  const todayUtc=Date.UTC(local.year,local.month-1,local.day),birthUtc=Date.UTC(1994,11,7),sinceBirthDays=Math.max(0,Math.floor((todayUtc-birthUtc)/86400000));
+  const sinceBirth=document.getElementById('sinceBirthdayDays');if(sinceBirth)sinceBirth.textContent=String(sinceBirthDays);
+  hanyuUpdateTimeZoneBasisNote(l);
+}
 function updateProfessionalAnniversaryCountdown(){
-  const now=new Date(),l=document.documentElement.dataset.lang||'zh';
-  let year=now.getFullYear(),next=new Date(year,6,19,0,0,0);
-  if(now>=next)next=new Date(++year,6,19,0,0,0);
+  const now=new Date(),l=document.documentElement.dataset.lang||'zh',timeZone=hanyuTimeZoneForLang(l),local=hanyuZonedParts(now,timeZone);
+  let year=local.year,next=hanyuZonedDate(year,7,19,0,0,0,timeZone);
+  if(now>=next)next=hanyuZonedDate(++year,7,19,0,0,0,timeZone);
   const diff=Math.max(0,next-now),days=Math.floor(diff/86400000),hours=Math.floor(diff%86400000/3600000),minutes=Math.floor(diff%3600000/60000),seconds=Math.floor(diff%60000/1000);
   const labels={
     zh:{next:'距离下一次 7 月 19 日',year:`${year} 年 7 月 19 日`,since:'距离 2022 年 7 月 19 日已经过去',anniversary:'转职纪念日',units:['天','小时','分钟','秒'],day:'天'},
@@ -2212,8 +2244,9 @@ function updateProfessionalAnniversaryCountdown(){
   put('july19NextTitle',labels.next);put('july19Year',labels.year);put('july19SinceTitle',labels.since);put('july19AnniversaryLabel',labels.anniversary);
   put('july19Days',String(days).padStart(2,'0'));put('july19Hours',String(hours).padStart(2,'0'));put('july19Minutes',String(minutes).padStart(2,'0'));put('july19Seconds',String(seconds).padStart(2,'0'));
   document.querySelectorAll('#july19Countdown .count-unit span').forEach((el,i)=>{el.textContent=labels.units[i]});
-  const todayUtc=Date.UTC(now.getFullYear(),now.getMonth(),now.getDate()),startUtc=Date.UTC(2022,6,19),sinceDays=Math.max(0,Math.floor((todayUtc-startUtc)/86400000));
+  const todayUtc=Date.UTC(local.year,local.month-1,local.day),startUtc=Date.UTC(2022,6,19),sinceDays=Math.max(0,Math.floor((todayUtc-startUtc)/86400000));
   put('sinceJuly19Days',String(sinceDays));const sinceUnit=document.querySelector('#july19Since .count-unit span');if(sinceUnit)sinceUnit.textContent=labels.day;
+  hanyuUpdateTimeZoneBasisNote(l);
 }
 function setupMuseumV3(){const portrait=$('#profilePortrait');if(portrait){portrait.src=profileImage;portrait.loading='lazy';portrait.decoding='async';portrait.referrerPolicy='no-referrer';}updateBirthdayCountdown();updateProfessionalAnniversaryCountdown();setInterval(updateBirthdayCountdown,1000);setInterval(updateProfessionalAnniversaryCountdown,1000);const originalOpenShow=openShow,originalOpenMilestone=openMilestone;openShow=function(id){$('#modalHero').classList.remove('no-photo');originalOpenShow(id)};openMilestone=function(i){$('#modalHero').classList.remove('no-photo');originalOpenMilestone(i)}}
 setupMuseumV3();
@@ -2803,7 +2836,8 @@ drawTrend();renderPosters();renderMilestones();
       .profile-books-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;align-items:stretch}
       .profile-book-card{display:flex;flex-direction:column;overflow:hidden;border-radius:18px;background:linear-gradient(145deg,rgba(8,26,41,.9),rgba(3,13,24,.92));border:1px solid rgba(188,236,255,.18);min-width:0;isolation:isolate}
       .profile-book-cover{height:340px;flex:0 0 340px;padding:16px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 28%,rgba(83,196,239,.16),transparent 54%),rgba(1,9,17,.78);overflow:hidden;position:relative;z-index:1;box-sizing:border-box;content-visibility:visible!important}
-      .profile-book-cover img{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 18px 22px rgba(0,0,0,.38))}
+      .profile-book-cover img{width:100%;height:100%;object-fit:contain;object-position:center center;display:block;filter:drop-shadow(0 18px 22px rgba(0,0,0,.38))}
+
       .profile-book-copy{padding:17px 17px 20px;display:flex;flex:1 1 auto;flex-direction:column;position:relative;z-index:2;background:linear-gradient(180deg,rgba(4,16,28,.98),rgba(4,14,25,.99));min-height:210px;box-sizing:border-box}
       .profile-book-meta{color:#8edff7;font-size:9px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;line-height:1.5}
       .profile-book-card h4{margin:8px 0 9px;color:#fff;font-size:18px;line-height:1.3}
@@ -2989,7 +3023,9 @@ drawTrend();renderPosters();renderMilestones();
   function fixDynamicLanguageLabels() {
     const l = lang();
     const now = new Date();
-    const year = now.getFullYear() >= 2026 ? now.getFullYear() : 2026;
+    const timeZone = hanyuTimeZoneForLang(l);
+    const local = hanyuZonedParts(now, timeZone);
+    const year = local.year >= 2026 ? local.year : 2026;
     const birthdayYear = $("#birthdayYear");
     if (birthdayYear) birthdayYear.textContent = l === "en" ? `${year} Birthday` : l === "ja" ? `${year}年の誕生日` : `${year} 年生日`;
 
@@ -3003,8 +3039,8 @@ drawTrend();renderPosters();renderMilestones();
     }[l];
     $$("#profile .countdown:not(.july19-countdown):not(.july19-since):not(.birthday-since) .count-unit span").forEach((el,i)=>{ if (birthdayUnits[i]) el.textContent=birthdayUnits[i]; });
 
-    let professionalYear = now.getFullYear();
-    let nextProfessional = new Date(professionalYear, 6, 19, 0, 0, 0);
+    let professionalYear = local.year;
+    let nextProfessional = hanyuZonedDate(professionalYear, 7, 19, 0, 0, 0, timeZone);
     if (now >= nextProfessional) professionalYear += 1;
     const professionalCopy = {
       zh:{next:"距离下一次 7 月 19 日",year:`${professionalYear} 年 7 月 19 日`,since:"距离 2022 年 7 月 19 日已经过去",anniversary:"转职纪念日",units:["天","小时","分钟","秒"],day:"天"},
@@ -3026,6 +3062,7 @@ drawTrend();renderPosters();renderMilestones();
     setText("#birthdaySinceTitle", birthCopy.since);
     setText("#birthdayAnniversaryLabel", birthCopy.anniversary);
     setText("#birthdaySince .count-unit span", birthCopy.day);
+    hanyuUpdateTimeZoneBasisNote(l);
   }
 
   function translateResidualProfileLabels() {
