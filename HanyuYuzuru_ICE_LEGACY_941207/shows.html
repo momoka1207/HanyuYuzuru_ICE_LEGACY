@@ -4339,12 +4339,47 @@ drawTrend();renderPosters();renderMilestones();
   const pages={home:'index.html',profile:'profile.html',competition:'competition.html',shows:'shows.html',costumes:'costumes.html',sources:'sources.html'};
   const selectors={home:'.hero,#overview',profile:'#profile',competition:'#competitions',shows:'#shows',costumes:'#costumes',sources:'#sources'};
   const titleSuffix={zh:{home:'生涯总览',profile:'个人主页',competition:'比赛档案',shows:'职业冰演',costumes:'考斯滕',sources:'官方网站'},en:{home:'Career Overview',profile:'Profile',competition:'Competition Archive',shows:'Professional Ice Shows',costumes:'Costumes',sources:'Official Sources'},ja:{home:'キャリア概要',profile:'プロフィール',competition:'競技記録',shows:'プロアイスショー',costumes:'衣装',sources:'公式情報'}};
-  function current(){return (document.body.className.match(/page-([a-z]+)/)||[])[1]||'home'}
-  function activateImages(){const key=current(),root=document.querySelector(selectors[key]);if(!root)return;if(key==='profile'){const p=document.querySelector('#profilePortrait');if(p&&!p.getAttribute('src')&&typeof profileImage!=='undefined')p.src=profileImage}const imgs=[...root.querySelectorAll('img[src]')];const priorityCount=key==='home'?4:key==='shows'||key==='costumes'?5:2;imgs.forEach((img,i)=>{img.decoding='async';img.referrerPolicy='no-referrer';img.loading=i<priorityCount?'eager':'lazy';img.fetchPriority=i<priorityCount?'high':'auto'})}
-  function setPage(key,{push=true,scroll=true}={}){if(!pages[key])key='home';Object.keys(pages).forEach(k=>document.body.classList.toggle('page-'+k,k===key));document.body.classList.add('paged-page');document.querySelectorAll('.topbar nav a[data-paged-link]').forEach(a=>{if(a.dataset.pagedLink===key)a.setAttribute('data-active-page','1');else a.removeAttribute('data-active-page')});if(push&&location.protocol!=='about:'&&location.protocol!=='data:'){history.pushState({page:key},'',pages[key])}const l=document.documentElement.dataset.lang||'zh';document.title=`${l==='ja'?'羽生結弦':l==='en'?'Yuzuru Hanyu':'羽生结弦'} ICE LEGACY｜${titleSuffix[l]?.[key]||titleSuffix.en[key]}`;activateImages();if(scroll)window.scrollTo({top:0,left:0,behavior:'auto'})}
-  document.addEventListener('click',e=>{const a=e.target.closest('a[href]');if(!a||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||a.target==='_blank'||a.hasAttribute('download'))return;const raw=(a.getAttribute('href')||'').split('#')[0].split('?')[0].replace(/^.*\//,'');const key=a.dataset.pagedLink||Object.entries(pages).find(([,filename])=>filename===raw)?.[0];if(!key)return;e.preventDefault();e.stopImmediatePropagation();setPage(key)},true);
-  window.addEventListener('popstate',e=>setPage(e.state?.page||Object.entries(pages).find(([,v])=>location.pathname.endsWith(v))?.[0]||'home',{push:false,scroll:false}));
-  window.__hanyuSetPage=setPage;window.__hanyuActivatePageImages=activateImages;setPage(current(),{push:false,scroll:false});
+  const pageByFile=Object.fromEntries(Object.entries(pages).map(([key,file])=>[file,key]));
+  function pathPage(){
+    const file=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+    return pageByFile[file]||null;
+  }
+  function classPage(){return (document.body.className.match(/(?:^|\s)page-([a-z]+)(?:\s|$)/)||[])[1]||null}
+  function currentPage(){return pathPage()||classPage()||'home'}
+  function activateImages(){
+    const key=currentPage(),root=document.querySelector(selectors[key]);
+    if(!root)return;
+    if(key==='profile'){
+      const portrait=document.querySelector('#profilePortrait');
+      if(portrait&&!portrait.getAttribute('src')&&typeof profileImage!=='undefined')portrait.src=profileImage;
+    }
+    const imgs=[...root.querySelectorAll('img[src]')];
+    const priorityCount=key==='home'?4:key==='shows'||key==='costumes'?5:2;
+    imgs.forEach((img,i)=>{img.decoding='async';img.referrerPolicy='no-referrer';img.loading=i<priorityCount?'eager':'lazy';img.fetchPriority=i<priorityCount?'high':'auto'});
+  }
+  function applyPage(key=currentPage(),{scroll=false}={}){
+    if(!pages[key])key='home';
+    Object.keys(pages).forEach(k=>document.body.classList.toggle('page-'+k,k===key));
+    document.body.classList.add('paged-page');
+    document.querySelectorAll('.topbar nav a[data-paged-link]').forEach(a=>{
+      if(a.dataset.pagedLink===key)a.setAttribute('data-active-page','1');
+      else a.removeAttribute('data-active-page');
+    });
+    const l=document.documentElement.dataset.lang||'zh';
+    document.title=`${l==='ja'?'羽生結弦':l==='en'?'Yuzuru Hanyu':'羽生结弦'} ICE LEGACY｜${titleSuffix[l]?.[key]||titleSuffix.en[key]}`;
+    activateImages();
+    if(scroll)window.scrollTo({top:0,left:0,behavior:'auto'});
+  }
+  function setPage(key,options={}){
+    if(!pages[key])key='home';
+    const active=currentPage();
+    if(key===active||options.push===false){applyPage(key,{scroll:!!options.scroll});return;}
+    location.href=pages[key];
+  }
+  window.__hanyuSetPage=setPage;
+  window.__hanyuActivatePageImages=activateImages;
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>applyPage(currentPage()),{once:true});
+  else applyPage(currentPage());
 })();
 </script>
 <style id="lightweight-final-polish-style">
