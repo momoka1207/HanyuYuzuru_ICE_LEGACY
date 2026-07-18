@@ -14,13 +14,12 @@
   </script>
   <link rel="preload" as="image" href="assets/inline-00-b3683d2dba.jpg" fetchpriority="high">
   <meta name="description" content="羽生结弦 1994–2026 生涯数据与职业冰演数字展馆">
-  <title>羽生结弦 ICE LEGACY｜主页</title>
+  <title>羽生结弦 ICE LEGACY｜比赛档案</title>
   <style id="paged-critical-route">
   html{scroll-behavior:auto!important}
   body.paged-page.is-page-leaving{visibility:visible!important}
   body.paged-page .hero,body.paged-page #overview,body.paged-page #profile,body.paged-page #competitions,body.paged-page #shows,body.paged-page #costumes,body.paged-page #sources{display:none!important}
-  body.page-home .hero{display:flex!important}
-  body.page-home #overview,body.page-profile #profile,body.page-competition #competitions,body.page-shows #shows,body.page-costumes #costumes,body.page-sources #sources{display:block!important}
+  body.page-competition #competitions{display:block!important}
 </style>
   <style>
     :root{--night:#020912;--deep:#071728;--navy:#0b2741;--blue:#287dab;--ice:#bcecff;--white:#f7fcff;--muted:#9db4c6;--gold:#e8c779;--orange:#f1874b;--line:rgba(180,224,246,.17);--glass:rgba(8,28,47,.72)}
@@ -745,8 +744,7 @@ body::after{
 <style id="paged-routing-style">
   html{scroll-behavior:auto!important}
   body.paged-page .hero,body.paged-page #overview,body.paged-page #profile,body.paged-page #competitions,body.paged-page #shows,body.paged-page #costumes,body.paged-page #sources{display:none!important}
-  body.page-home .hero{display:flex!important}body.page-home #overview{display:block!important}
-  body.page-profile #profile,body.page-competition #competitions,body.page-shows #shows,body.page-costumes #costumes,body.page-sources #sources{display:block!important}
+  body.page-competition #competitions{display:block!important}
   body.paged-page .topbar nav a[data-active-page="1"]{color:#fff!important;border-bottom:1px solid rgba(188,236,255,.75);padding-bottom:4px}
 </style><style id="performance-tuning">
   body.paged-page section{content-visibility:auto;contain-intrinsic-size:900px}
@@ -4330,55 +4328,65 @@ drawTrend();renderPosters();renderMilestones();
 })();
 </script>
 
-<script id="paged-routing-hotfix">
+<script id="competition-direct-page-runtime">
 (function(){
   "use strict";
-  if(window.__hanyuPageRuntime)return;
-  window.__hanyuPageRuntime=true;
-  const pages={home:'index.html',profile:'profile.html',competition:'competition.html',shows:'shows.html',costumes:'costumes.html',sources:'sources.html'};
-  const selectors={home:'.hero,#overview',profile:'#profile',competition:'#competitions',shows:'#shows',costumes:'#costumes',sources:'#sources'};
-  const titleSuffix={zh:{home:'生涯总览',profile:'个人主页',competition:'比赛档案',shows:'职业冰演',costumes:'考斯滕',sources:'官方网站'},en:{home:'Career Overview',profile:'Profile',competition:'Competition Archive',shows:'Professional Ice Shows',costumes:'Costumes',sources:'Official Sources'},ja:{home:'キャリア概要',profile:'プロフィール',competition:'競技記録',shows:'プロアイスショー',costumes:'衣装',sources:'公式情報'}};
-  const pageByFile=Object.fromEntries(Object.entries(pages).map(([key,file])=>[file,key]));
-  function pathPage(){
-    const file=(location.pathname.split('/').pop()||'index.html').toLowerCase();
-    return pageByFile[file]||null;
+  if(window.__competitionDirectPageRuntime)return;
+  window.__competitionDirectPageRuntime=true;
+
+  const titles={zh:"比赛档案",en:"Competition Archive",ja:"競技記録"};
+
+  function currentLanguage(){
+    const value=document.documentElement.dataset.lang||"zh";
+    return ["zh","en","ja"].includes(value)?value:"zh";
   }
-  function classPage(){return (document.body.className.match(/(?:^|\s)page-([a-z]+)(?:\s|$)/)||[])[1]||null}
-  function currentPage(){return pathPage()||classPage()||'home'}
-  function activateImages(){
-    const key=currentPage(),root=document.querySelector(selectors[key]);
+
+  function activateCompetitionImages(){
+    const root=document.querySelector("#competitions");
     if(!root)return;
-    if(key==='profile'){
-      const portrait=document.querySelector('#profilePortrait');
-      if(portrait&&!portrait.getAttribute('src')&&typeof profileImage!=='undefined')portrait.src=profileImage;
-    }
-    const imgs=[...root.querySelectorAll('img[src]')];
-    const priorityCount=key==='home'?4:key==='shows'||key==='costumes'?5:2;
-    imgs.forEach((img,i)=>{img.decoding='async';img.referrerPolicy='no-referrer';img.loading=i<priorityCount?'eager':'lazy';img.fetchPriority=i<priorityCount?'high':'auto'});
-  }
-  function applyPage(key=currentPage(),{scroll=false}={}){
-    if(!pages[key])key='home';
-    Object.keys(pages).forEach(k=>document.body.classList.toggle('page-'+k,k===key));
-    document.body.classList.add('paged-page');
-    document.querySelectorAll('.topbar nav a[data-paged-link]').forEach(a=>{
-      if(a.dataset.pagedLink===key)a.setAttribute('data-active-page','1');
-      else a.removeAttribute('data-active-page');
+    [...root.querySelectorAll("img[src]")].forEach((image,index)=>{
+      image.decoding="async";
+      image.referrerPolicy="no-referrer";
+      image.loading=index<2?"eager":"lazy";
+      image.fetchPriority=index<2?"high":"auto";
     });
-    const l=document.documentElement.dataset.lang||'zh';
-    document.title=`${l==='ja'?'羽生結弦':l==='en'?'Yuzuru Hanyu':'羽生结弦'} ICE LEGACY｜${titleSuffix[l]?.[key]||titleSuffix.en[key]}`;
-    activateImages();
-    if(scroll)window.scrollTo({top:0,left:0,behavior:'auto'});
   }
-  function setPage(key,options={}){
-    if(!pages[key])key='home';
-    const active=currentPage();
-    if(key===active||options.push===false){applyPage(key,{scroll:!!options.scroll});return;}
-    location.href=pages[key];
+
+  function initializeCompetitionPage(){
+    [...document.body.classList].forEach(name=>{
+      if(/^page-/.test(name))document.body.classList.remove(name);
+    });
+    document.body.classList.add("paged-page","page-competition");
+
+    document.querySelectorAll(".topbar nav a").forEach(anchor=>{
+      const href=(anchor.getAttribute("href")||"").split("?")[0].split("#")[0];
+      if(href==="competition.html")anchor.setAttribute("data-active-page","1");
+      else anchor.removeAttribute("data-active-page");
+      if(anchor.dataset.directPageBound!=="1"){
+        anchor.dataset.directPageBound="1";
+        anchor.addEventListener("click",event=>{
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          window.location.assign(anchor.href);
+        },true);
+      }
+    });
+
+    const lang=currentLanguage();
+    const name=lang==="ja"?"羽生結弦":lang==="en"?"Yuzuru Hanyu":"羽生结弦";
+    document.title=`${name} ICE LEGACY｜${titles[lang]}`;
+    activateCompetitionImages();
   }
-  window.__hanyuSetPage=setPage;
-  window.__hanyuActivatePageImages=activateImages;
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>applyPage(currentPage()),{once:true});
-  else applyPage(currentPage());
+
+  window.__hanyuActivatePageImages=activateCompetitionImages;
+  window.__hanyuSetPage=(key)=>{
+    if(key==="competition"){initializeCompetitionPage();return;}
+    const targets={home:"index.html",profile:"profile.html",shows:"shows.html",costumes:"costumes.html",sources:"sources.html"};
+    if(targets[key])window.location.assign(targets[key]);
+  };
+
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initializeCompetitionPage,{once:true});
+  else initializeCompetitionPage();
 })();
 </script>
 <style id="lightweight-final-polish-style">
