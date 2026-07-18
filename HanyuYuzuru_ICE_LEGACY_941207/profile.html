@@ -2197,43 +2197,57 @@ function filteredCompetitions(){const q=$('#compSearch').value.trim().toLowerCas
 function renderCompetitions(reset=false){if(reset)competitionLimit=10;const list=filteredCompetitions();$('#compCount').textContent=`找到 ${list.length} 条记录 · 显示 ${Math.min(list.length,competitionLimit)} 条`;$('#competitionList').innerHTML=list.slice(0,competitionLimit).map(c=>`<article class="competition-row" data-comp-id="${c.id}" tabindex="0"><div class="comp-year">${c.year}</div><div class="comp-name"><b>${c.nameEn}</b><span>${c.season} · ${c.stage} · ${c.level} · ${c.id}${c.worldRecord?' · WR':''}</span></div><div class="comp-type">${c.type}</div><div class="comp-location">${c.location}</div><div class="comp-result"><span class="medal ${c.medal||''}">${c.medal||('Rank '+(c.rank??'—'))}</span>${c.score!=null?`<span class="comp-location">${c.score.toFixed(2)}</span>`:''}</div></article>`).join('');document.querySelectorAll('[data-comp-id]').forEach(row=>{const open=()=>openCompetition(row.dataset.compId);row.addEventListener('click',open);row.addEventListener('keydown',e=>{if(e.key==='Enter')open()})});$('#loadMoreCompetitions').style.display=competitionLimit<list.length?'block':'none';}
 function openCompetition(id){const c=competitions.find(x=>x.id===id);$('#modalHero').classList.toggle('no-photo',!c.image);$('#modalImage').src=c.image||'';$('#modalImage').alt=c.nameEn+' 官方现场图';$('#modalOverline').textContent=`COMPETITION ARCHIVE · ${c.year} · ${c.id}`;$('#modalTitle').textContent=c.nameEn;const source=c.source?`<a class="official-link" href="${c.source}" target="_blank" rel="noreferrer">查看官方成绩来源 ↗</a>`:'<span class="status-wait">行级官方来源待补</span>';const photoSource=competitionPhotoSources[c.id];const photoLink=photoSource?`<a class="official-link" href="${photoSource.url}" target="_blank" rel="noreferrer">查看可核验官方现场图 ↗</a><small class="image-credit">${photoSource.credit}</small>`:'';$('#modalBody').innerHTML=`<div class="modal-copy"><div><p>${c.season} 赛季，约 ${c.age} 岁。生涯阶段：${c.stage}；赛事类型：${c.type}；级别：${c.level}；地点：${c.location}。</p><p>${c.image?'已绑定该场官方现场图片。':'目前尚未找到可确认属于该场比赛且可安全内嵌的官方图片，因此不使用替代照片。'}</p>${source}${photoLink}</div><div class="facts"><div class="fact"><span>Overall</span><b>Rank ${c.rank??'—'}${c.medal?' · '+c.medal:''}</b></div><div class="fact"><span>Total score</span><b>${c.score!=null?c.score.toFixed(2):'—'}</b></div><div class="fact"><span>SP</span><b>${c.spRank??'—'} / ${c.spScore??'—'}</b></div><div class="fact"><span>FS</span><b>${c.fsRank??'—'} / ${c.fsScore??'—'}</b></div><div class="fact"><span>Verification</span><b>${c.confidence||'待核对'}</b></div></div></div>`;openModal()}
 function renderCostumes(){$('#costumeGrid').innerHTML=costumeCatalog.map(c=>`<article class="costume"><div class="costume-art" style="--tone:${c.tone}"><span>OFFICIAL PHOTO PENDING</span></div><div class="costume-body"><div class="season">${c.season} · ${c.kind}</div><h3>${c.program}</h3><p>${c.note}</p><span class="status-wait">官方图片 / 摄影版权待补</span></div></article>`).join('')}
-const HANYU_TIME_ZONE_BY_LANG={zh:'Asia/Shanghai',en:'Europe/London',ja:'Asia/Tokyo'};
-function hanyuTimeZoneForLang(l=document.documentElement.dataset.lang||'zh'){return HANYU_TIME_ZONE_BY_LANG[l]||HANYU_TIME_ZONE_BY_LANG.zh}
-function hanyuZonedParts(date,timeZone){
+const HANYU_TIME_ZONE_BY_LANG={
+  zh:{requestedId:'Asia/Beijing',kind:'fixed',offsetMinutes:480,note:'基于北京时间'},
+  en:{requestedId:'Europe/London',kind:'iana',intlId:'Europe/London',note:'Based on London time'},
+  ja:{requestedId:'Asia/Tokyo',kind:'fixed',offsetMinutes:540,note:'日本時間基準'}
+};
+function hanyuTimeZoneForLang(l=document.documentElement.dataset.lang||'zh'){
+  return HANYU_TIME_ZONE_BY_LANG[l]||HANYU_TIME_ZONE_BY_LANG.zh;
+}
+function hanyuZonedParts(date,zone){
+  if(zone.kind==='fixed'){
+    const shifted=new Date(date.getTime()+zone.offsetMinutes*60000);
+    return {year:shifted.getUTCFullYear(),month:shifted.getUTCMonth()+1,day:shifted.getUTCDate(),hour:shifted.getUTCHours(),minute:shifted.getUTCMinutes(),second:shifted.getUTCSeconds()};
+  }
   const values={};
-  new Intl.DateTimeFormat('en-CA',{timeZone,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(date).forEach(part=>{if(part.type!=='literal')values[part.type]=Number(part.value)});
+  new Intl.DateTimeFormat('en-CA',{timeZone:zone.intlId,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(date).forEach(part=>{if(part.type!=='literal')values[part.type]=Number(part.value)});
   return values;
 }
-function hanyuTimeZoneOffsetMs(date,timeZone){
-  const p=hanyuZonedParts(date,timeZone);
+function hanyuTimeZoneOffsetMs(date,zone){
+  if(zone.kind==='fixed')return zone.offsetMinutes*60000;
+  const p=hanyuZonedParts(date,zone);
   return Date.UTC(p.year,p.month-1,p.day,p.hour,p.minute,p.second)-Math.floor(date.getTime()/1000)*1000;
 }
-function hanyuZonedDate(year,month,day,hour,minute,second,timeZone){
-  const wallTime=Date.UTC(year,month-1,day,hour,minute,second),probe=new Date(wallTime);
-  let offset=hanyuTimeZoneOffsetMs(probe,timeZone),result=new Date(wallTime-offset),refined=hanyuTimeZoneOffsetMs(result,timeZone);
+function hanyuZonedDate(year,month,day,hour,minute,second,zone){
+  const wallTime=Date.UTC(year,month-1,day,hour,minute,second);
+  if(zone.kind==='fixed')return new Date(wallTime-zone.offsetMinutes*60000);
+  const probe=new Date(wallTime);
+  let offset=hanyuTimeZoneOffsetMs(probe,zone),result=new Date(wallTime-offset),refined=hanyuTimeZoneOffsetMs(result,zone);
   if(refined!==offset)result=new Date(wallTime-refined);
   return result;
 }
+function hanyuCalendarDayNumber(parts){return Math.floor(Date.UTC(parts.year,parts.month-1,parts.day)/86400000)}
 function hanyuUpdateTimeZoneBasisNote(l=document.documentElement.dataset.lang||'zh'){
-  const note=document.getElementById('timeZoneBasisNote');
-  if(note)note.textContent={zh:'基于北京时间',en:'Based on London time',ja:'日本時間基準'}[l]||'基于北京时间';
+  const note=document.getElementById('timeZoneBasisNote'),zone=hanyuTimeZoneForLang(l);
+  if(note)note.textContent=zone.note;
 }
 function updateBirthdayCountdown(){
-  const now=new Date(),l=document.documentElement.dataset.lang||'zh',timeZone=hanyuTimeZoneForLang(l),local=hanyuZonedParts(now,timeZone);
-  let year=local.year,next=hanyuZonedDate(year,12,7,0,0,0,timeZone);
-  if(now>=next)next=hanyuZonedDate(++year,12,7,0,0,0,timeZone);
-  const diff=Math.max(0,next-now),days=Math.floor(diff/86400000),hours=Math.floor(diff%86400000/3600000),minutes=Math.floor(diff%3600000/60000),seconds=Math.floor(diff%60000/1000);
+  const now=new Date(),l=document.documentElement.dataset.lang||'zh',zone=hanyuTimeZoneForLang(l),local=hanyuZonedParts(now,zone);
+  let year=local.year,next=hanyuZonedDate(year,12,7,0,0,0,zone);
+  if(now>=next)next=hanyuZonedDate(++year,12,7,0,0,0,zone);
+  const diff=Math.max(0,next.getTime()-now.getTime()),days=Math.floor(diff/86400000),hours=Math.floor(diff%86400000/3600000),minutes=Math.floor(diff%3600000/60000),seconds=Math.floor(diff%60000/1000);
   $('#birthdayYear').textContent=l==='en'?`${year} Birthday`:l==='ja'?`${year}年の誕生日`:`${year} 年生日`;
   $('#countDays').textContent=String(days).padStart(2,'0');$('#countHours').textContent=String(hours).padStart(2,'0');$('#countMinutes').textContent=String(minutes).padStart(2,'0');$('#countSeconds').textContent=String(seconds).padStart(2,'0');
-  const todayUtc=Date.UTC(local.year,local.month-1,local.day),birthUtc=Date.UTC(1994,11,7),sinceBirthDays=Math.max(0,Math.floor((todayUtc-birthUtc)/86400000));
+  const sinceBirthDays=Math.max(0,hanyuCalendarDayNumber(local)-Math.floor(Date.UTC(1994,11,7)/86400000));
   const sinceBirth=document.getElementById('sinceBirthdayDays');if(sinceBirth)sinceBirth.textContent=String(sinceBirthDays);
   hanyuUpdateTimeZoneBasisNote(l);
 }
 function updateProfessionalAnniversaryCountdown(){
-  const now=new Date(),l=document.documentElement.dataset.lang||'zh',timeZone=hanyuTimeZoneForLang(l),local=hanyuZonedParts(now,timeZone);
-  let year=local.year,next=hanyuZonedDate(year,7,19,0,0,0,timeZone);
-  if(now>=next)next=hanyuZonedDate(++year,7,19,0,0,0,timeZone);
-  const diff=Math.max(0,next-now),days=Math.floor(diff/86400000),hours=Math.floor(diff%86400000/3600000),minutes=Math.floor(diff%3600000/60000),seconds=Math.floor(diff%60000/1000);
+  const now=new Date(),l=document.documentElement.dataset.lang||'zh',zone=hanyuTimeZoneForLang(l),local=hanyuZonedParts(now,zone);
+  let year=local.year,next=hanyuZonedDate(year,7,19,0,0,0,zone);
+  if(now>=next)next=hanyuZonedDate(++year,7,19,0,0,0,zone);
+  const diff=Math.max(0,next.getTime()-now.getTime()),days=Math.floor(diff/86400000),hours=Math.floor(diff%86400000/3600000),minutes=Math.floor(diff%3600000/60000),seconds=Math.floor(diff%60000/1000);
   const labels={
     zh:{next:'距离下一次 7 月 19 日',year:`${year} 年 7 月 19 日`,since:'距离 2022 年 7 月 19 日已经过去',anniversary:'转职纪念日',units:['天','小时','分钟','秒'],day:'天'},
     en:{next:'Until the next July 19',year:`July 19, ${year}`,since:'Time since July 19, 2022',anniversary:'Professional transition anniversary',units:['Days','Hours','Minutes','Seconds'],day:'Days'},
@@ -2244,7 +2258,7 @@ function updateProfessionalAnniversaryCountdown(){
   put('july19NextTitle',labels.next);put('july19Year',labels.year);put('july19SinceTitle',labels.since);put('july19AnniversaryLabel',labels.anniversary);
   put('july19Days',String(days).padStart(2,'0'));put('july19Hours',String(hours).padStart(2,'0'));put('july19Minutes',String(minutes).padStart(2,'0'));put('july19Seconds',String(seconds).padStart(2,'0'));
   document.querySelectorAll('#july19Countdown .count-unit span').forEach((el,i)=>{el.textContent=labels.units[i]});
-  const todayUtc=Date.UTC(local.year,local.month-1,local.day),startUtc=Date.UTC(2022,6,19),sinceDays=Math.max(0,Math.floor((todayUtc-startUtc)/86400000));
+  const sinceDays=Math.max(0,hanyuCalendarDayNumber(local)-Math.floor(Date.UTC(2022,6,19)/86400000));
   put('sinceJuly19Days',String(sinceDays));const sinceUnit=document.querySelector('#july19Since .count-unit span');if(sinceUnit)sinceUnit.textContent=labels.day;
   hanyuUpdateTimeZoneBasisNote(l);
 }
@@ -3063,6 +3077,8 @@ drawTrend();renderPosters();renderMilestones();
     setText("#birthdayAnniversaryLabel", birthCopy.anniversary);
     setText("#birthdaySince .count-unit span", birthCopy.day);
     hanyuUpdateTimeZoneBasisNote(l);
+    if (typeof updateBirthdayCountdown === "function") updateBirthdayCountdown();
+    if (typeof updateProfessionalAnniversaryCountdown === "function") updateProfessionalAnniversaryCountdown();
   }
 
   function translateResidualProfileLabels() {
