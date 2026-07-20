@@ -2686,10 +2686,10 @@ drawTrend();renderPosters();renderMilestones();
       ja: "能登半島地震の被災地復興を支援するチャリティー公演。"
     },
     realive: {
-      title: { zh: "羽生结弦 ICE STORY 第四部", en: "Yuzuru Hanyu ICE STORY 4th", ja: "羽生結弦 ICE STORY 第四部" },
-      zh: "ICE STORY 第四部，围绕现实、再生与继续前行展开。",
-      en: "The fourth ICE STORY chapter, focused on reality, renewal, and continuing forward.",
-      ja: "ICE STORY 第4弾。現実、再生、そして前へ進むことを軸にした公演。"
+      title: { zh: "REALIVE an ICE STORY project", en: "REALIVE an ICE STORY project", ja: "REALIVE an ICE STORY project" },
+      zh: "an ICE STORY project，围绕现实、再生与继续前行展开。",
+      en: "an ICE STORY project focused on reality, renewal, and continuing forward.",
+      ja: "an ICE STORY project。現実、再生、そして前へ進むことを軸にした公演。"
     }
   };
 
@@ -2901,7 +2901,7 @@ drawTrend();renderPosters();renderMilestones();
         [/1999 开始滑冰/g, "1999 Started Skating"],
         [/2022 职业转向/g, "2022 Turned Professional"],
         [/出生于Miyagi县Sendai市。/g, "Born in Sendai, Miyagi."],
-        [/Yuzuru Hanyu ICE STORY 第四部/g, "Yuzuru Hanyu ICE STORY 4th"],
+        [/REALIVE an ICE STORY project/g, "REALIVE an ICE STORY project"],
         [/石川／金泽/g, "Ishikawa / Kanazawa"],
         [/Chiba／船桥/g, "Chiba / Funabashi"],
         [/千叶／船桥/g, "Chiba / Funabashi"],
@@ -3173,7 +3173,7 @@ drawTrend();renderPosters();renderMilestones();
       else if (/echoes/.test(raw)) key = "echoes";
       else if (/notte/.test(raw)) key = "notte";
       else if (/noto/.test(raw)) key = "noto";
-      else if (/realive|4th|第四部|第4弾|第4部/.test(raw)) key = "realive";
+      else if (/realive|an ice story project/.test(raw)) key = "realive";
       if (!key) return;
       const data = showDescriptions[key];
       const title = $("h3, h2, .poster-title, .show-title", card);
@@ -3203,7 +3203,7 @@ drawTrend();renderPosters();renderMilestones();
       ["2023 · 职业", "GIFT", "东京巨蛋单人冰演，把叙事、音乐、影像与滑冰合为一体。"],
       ["2023-2024 · 职业", "RE_PRAY", "ICE STORY 第二章，以游戏、选择和祈愿为线索展开。"],
       ["2024-2025 · 职业", "Echoes of Life TOUR", "ICE STORY 第三部，围绕生命与人生展开。"],
-      ["2025-2026 · 职业", "REALIVE", "ICE STORY 第四部，围绕现实、再生与继续前行展开。"]
+      ["2025-2026 · 职业", "REALIVE", "an ICE STORY project，围绕现实、再生与继续前行展开。"]
     ],
     en: [
       ["1994-12-07 · Life", "Born in Sendai", "Yuzuru Hanyu was born in Sendai, Miyagi, Japan."],
@@ -3217,7 +3217,7 @@ drawTrend();renderPosters();renderMilestones();
       ["2023 · Professional", "GIFT", "A solo Tokyo Dome ice show combining narrative, music, visuals, and skating."],
       ["2023-2024 · Professional", "RE_PRAY", "The second ICE STORY chapter, built around games, choices, and prayer."],
       ["2024-2025 · Professional", "Echoes of Life TOUR", "The third ICE STORY chapter, centered on life and human experience."],
-      ["2025-2026 · Professional", "REALIVE", "The fourth ICE STORY chapter, focused on reality, renewal, and continuing forward."]
+      ["2025-2026 · Professional", "REALIVE", "an ICE STORY project focused on reality, renewal, and continuing forward."]
     ],
     ja: [
       ["1994-12-07 · 人生", "仙台で誕生", "羽生結弦は日本の宮城県仙台市で生まれました。"],
@@ -3231,7 +3231,7 @@ drawTrend();renderPosters();renderMilestones();
       ["2023 · プロ", "GIFT", "東京ドームで物語、音楽、映像、スケートを融合させた単独公演。"],
       ["2023-2024 · プロ", "RE_PRAY", "ICE STORY 第2弾。ゲーム、選択、祈りを軸に展開する公演。"],
       ["2024-2025 · プロ", "Echoes of Life TOUR", "ICE STORY 第3弾。生命と人生を中心に描く公演。"],
-      ["2025-2026 · プロ", "REALIVE", "ICE STORY 第4弾。現実、再生、そして前へ進むことを軸にした公演。"]
+      ["2025-2026 · プロ", "REALIVE", "an ICE STORY project。現実、再生、そして前へ進むことを軸にした公演。"]
     ]
   };
 
